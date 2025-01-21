@@ -1,87 +1,145 @@
 <x-layout>
-    <div class="bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 min-h-screen flex flex-col">
-        <div class="relative min-h-screen flex flex-col items-center justify-center">
-            <div class="relative w-full max-w-md px-6 lg:px-8">
-                <div class="bg-white shadow-md rounded-lg p-8">
-                    <div class="flex items-center justify-center mb-6">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-[#FF2D20]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                        </svg>
-                        <span class="ml-2 text-2xl font-bold text-gray-800">Smart Farm</span>
+    <div class="flex min-h-screen">
+        <!-- Enhanced Image Section -->
+        <div class="hidden lg:flex w-1/2 relative overflow-hidden">
+            <!-- Main background image -->
+            <img 
+                src="{{ asset('images/smart-farm.jpg') }}"
+                alt="Smart Farm Technology"
+                class="absolute inset-0 w-full h-full object-cover"
+            />
+            
+            <!-- Gradient overlays -->
+            <div class="absolute inset-0 bg-gradient-to-br from-[#FF2D20]/80 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+            
+            <!-- Decorative elements -->
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMjAgMjBMMCAwaDQwTDIwIDIwem0wIDBMMCA0MGg0MEwyMCAyMHoiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iLjA1Ii8+PC9zdmc+')] opacity-30"></div>
+            
+            <!-- Content -->
+            <div class="relative z-10 flex flex-col justify-between h-full p-12">
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-1 bg-white/60 rounded-full"></div>
+                        <div class="text-white/80 text-sm tracking-wider">WELCOME BACK</div>
+                    </div>
+                    <h1 class="text-5xl font-bold text-white leading-tight">
+                        Smart Farm
+                        <span class="block text-2xl font-light mt-2">Innovation in Agriculture</span>
+                    </h1>
+                    <p class="text-lg text-white/90 max-w-md">
+                        Access your smart farming dashboard and continue revolutionizing agriculture
+                    </p>
+                </div>
+
+                <!-- Decorative bottom section -->
+                <div class="space-y-8">
+                    <div class="flex space-x-4">
+                        <div class="h-px w-8 bg-white/40 my-auto"></div>
+                        <p class="text-white/80 text-sm">MONITOR • ANALYZE • OPTIMIZE</p>
+                    </div>
+                    
+                    <!-- Floating geometric shapes -->
+                    <div class="absolute bottom-12 right-12 w-64 h-64 opacity-10">
+                        <div class="absolute inset-0 border-2 border-white/20 rounded-full animate-spin-slow"></div>
+                        <div class="absolute inset-4 border border-white/20 rounded-full rotate-45"></div>
+                        <div class="absolute inset-8 border border-white/20 rounded-full -rotate-45"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Form Section -->
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 px-8 lg:px-12 flex flex-col justify-center">
+            <div class="w-full max-w-md mx-auto">
+                <!-- Logo and Title -->
+                <div class="flex items-center justify-start space-x-3 mb-8">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#FF2D20]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                    <span class="text-xl font-bold text-gray-800">Welcome Back</span>
+                </div>
+
+                <form method="POST" action="{{ route('login') }}" class="space-y-6">
+                    @csrf
+                    
+                    <!-- Email -->
+                    <div class="space-y-1">
+                        <label for="email" class="block text-sm font-medium text-gray-700">
+                            {{ __('Email') }}
+                        </label>
+                        <input 
+                            id="email" 
+                            type="email" 
+                            name="email" 
+                            required 
+                            autocomplete="email"
+                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
+                                @error('email') border-red-500 @enderror"
+                        >
+                        @error('email')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
-                    <form method="POST" action="{{ route('login') }}" class="space-y-6">
-                        @csrf
-                        
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">
-                                {{ __('Email') }}
-                            </label>
+                    <!-- Password -->
+                    <div class="space-y-1">
+                        <label for="password" class="block text-sm font-medium text-gray-700">
+                            {{ __('Password') }}
+                        </label>
+                        <input 
+                            id="password" 
+                            type="password" 
+                            name="password" 
+                            required 
+                            autocomplete="current-password"
+                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
+                                @error('password') border-red-500 @enderror"
+                        >
+                        @error('password')
+                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
                             <input 
-                                id="email" 
-                                type="email" 
-                                name="email" 
-                                required 
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50"
+                                id="remember_me" 
+                                type="checkbox" 
+                                name="remember" 
+                                class="h-4 w-4 text-[#FF2D20] focus:ring-[#FF2D20] border-gray-300 rounded transition duration-150 ease-in-out"
                             >
-                        </div>
-
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-700">
-                                {{ __('Password') }}
+                            <label for="remember_me" class="ml-2 block text-sm text-gray-700">
+                                {{ __('Remember me') }}
                             </label>
-                            <input 
-                                id="password" 
-                                type="password" 
-                                name="password" 
-                                required 
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50"
-                            >
                         </div>
 
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center">
-                                <input 
-                                    id="remember_me" 
-                                    type="checkbox" 
-                                    name="remember" 
-                                    class="h-4 w-4 text-[#FF2D20] focus:ring-[#FF2D20] border-gray-300 rounded"
-                                >
-                                <label for="remember_me" class="ml-2 block text-sm text-gray-900">
-                                    {{ __('Remember me') }}
-                                </label>
-                            </div>
+                        @if (Route::has('password.request'))
+                            <a href="{{ route('password.request') }}" class="text-sm text-[#FF2D20] hover:text-[#e02717] transition-colors duration-150">
+                                {{ __('Forgot password?') }}
+                            </a>
+                        @endif
+                    </div>
 
-                            @if (Route::has('password.request'))
-                                <div class="text-sm">
-                                    <a href="{{ route('password.request') }}" class="font-medium text-[#FF2D20] hover:text-[#e02717]">
-                                        {{ __('Forgot your password?') }}
-                                    </a>
-                                </div>
-                            @endif
-                        </div>
+                    <!-- Login Button -->
+                    <button 
+                        type="submit" 
+                        class="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#FF2D20] hover:bg-[#e02717] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] transition-all duration-150 ease-in-out"
+                    >
+                        {{ __('Log in') }}
+                    </button>
 
-                        <div>
-                            <button 
-                                type="submit" 
-                                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#FF2D20] hover:bg-[#e02717] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20]"
-                            >
-                                {{ __('Log in') }}
-                            </button>
-                        </div>
-                    </form>
-
+                    <!-- Register Link -->
                     @if (Route::has('register'))
-                        <div class="mt-6 text-center">
-                            <p class="text-sm text-gray-600">
-                                Don't have an account? 
-                                <a href="{{ route('register') }}" class="font-medium text-[#FF2D20] hover:text-[#e02717]">
-                                    Register
-                                </a>
-                            </p>
-                        </div>
+                        <p class="mt-6 text-center text-sm text-gray-600">
+                            Don't have an account?
+                            <a href="{{ route('register') }}" class="font-medium text-[#FF2D20] hover:text-[#e02717] transition-colors duration-150 ml-1">
+                                Create one now
+                            </a>
+                        </p>
                     @endif
-                </div>
+                </form>
             </div>
         </div>
     </div>
