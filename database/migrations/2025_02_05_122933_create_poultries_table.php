@@ -11,8 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('poultries', function (Blueprint $table) {
+        Schema::create('poultry', function (Blueprint $table) {
             $table->id();
+            $table->date('date');
+            $table->integer('chicken_count');
+            $table->integer('mortalities')->default(0);
+            $table->integer('eggs_produced');
+            $table->integer('eggs_sold');
             $table->timestamps();
         });
     }
@@ -22,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('poultries');
+        Schema::dropIfExists('poultry');
     }
 };

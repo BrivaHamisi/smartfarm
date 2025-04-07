@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cattle', function (Blueprint $table) {
+        Schema::create('inseminations', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('age');
-            $table->decimal('weight_kg', 8, 2);
-            $table->string('breed');
-            $table->enum('gender', ['male', 'female']);
+            $table->foreignId('cow_id')->constrained('cattle')->onDelete('cascade');
+            $table->date('date');
+            $table->string('bull_number');
+            $table->boolean('successful')->nullable();
+            $table->date('expected_dob')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cattle');
+        Schema::dropIfExists('inseminations');
     }
 };

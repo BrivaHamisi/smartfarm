@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cattle', function (Blueprint $table) {
+        Schema::create('calves', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('cow_id')->constrained('cattle')->onDelete('cascade');
             $table->string('name');
-            $table->integer('age');
+            $table->date('dob');
             $table->decimal('weight_kg', 8, 2);
             $table->string('breed');
             $table->enum('gender', ['male', 'female']);
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cattle');
+        Schema::dropIfExists('calves');
     }
 };
