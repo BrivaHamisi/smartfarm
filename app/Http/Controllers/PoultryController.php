@@ -15,12 +15,23 @@ class PoultryController extends Controller
         //
     }
 
+    public function poultry()
+    {
+        $poultry = Poultry::all();
+        $totalChickens = $poultry->last()->chicken_count ?? 0;
+        $eggsToday = $poultry->where('date', today())->sum('eggs_produced');
+        $eggsSold = $poultry->where('date', today())->sum('eggs_sold');
+        $mortalities = $poultry->where('date', today())->sum('mortalities');
+
+        return view('dashboard.poultry', compact('poultry', 'totalChickens', 'eggsToday', 'eggsSold', 'mortalities'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('poultry.create');
     }
 
     /**
@@ -28,7 +39,17 @@ class PoultryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'date' => 'required|date',
+            'chicken_count' => 'required|integer|min:0',
+            'mortalities' => 'required|integer|min:0',
+            'eggs_produced' => 'required|integer|min:0',
+            'eggs_sold' => 'required|integer|min:0',
+        ]);
+
+        Poultry::create($request->all());
+
+        return redirect()->route('poultry.index')->with('success', 'Poultry record added successfully!');
     }
 
     /**

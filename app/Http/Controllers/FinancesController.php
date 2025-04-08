@@ -15,21 +15,39 @@ class FinancesController extends Controller
         //
     }
 
+    public function finances()
+    {
+        $financials = Finances::all();
+        $totalIncome = $financials->where('type', 'income')->sum('amount');
+        $totalExpenses = $financials->where('type', 'expense')->sum('amount');
+        $netProfit = $totalIncome - $totalExpenses;
+        $todayExpenses = $financials->where('type', 'expense')->where('date', today())->sum('amount');
+
+        return view('dashboard.finances', compact('financials', 'totalIncome', 'totalExpenses', 'netProfit', 'todayExpenses'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return view('finances.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'type' => 'required|in:expense,income',
+            'amount' => 'required|numeric|min:0',
+            'category' => 'required|in:feeds,medication,human_resource,sales',
+            'date' => 'required|date',
+        ]);
+
+        Finances::create($request->only(['type', 'amount', 'category', 'date']));
+
+        return redirect()->route('finances.index')->with('success', 'Financial record added successfully!');
     }
+
 
     /**
      * Display the specified resource.

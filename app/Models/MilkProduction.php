@@ -11,4 +11,9 @@ class MilkProduction extends Model
     public function cow() {
         return $this->belongsTo(Cattle::class, 'cow_id');
     }
+
+    public function getTotalYieldAttribute()
+    {
+        return $this->morning + $this->afternoon + $this->evening;
+    }
 }
