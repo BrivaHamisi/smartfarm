@@ -9,7 +9,7 @@ class Cattle extends Model
     protected $fillable = ['name', 'age', 'weight_kg', 'breed', 'gender'];
 
     public function milkProductions() {
-        return $this->hasMany(MilkProduction::class);
+        return $this->hasMany(MilkProduction::class, 'cow_id');
     }
 
     public function inseminations() {

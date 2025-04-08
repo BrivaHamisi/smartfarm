@@ -9,6 +9,6 @@ class MilkProduction extends Model
     protected $fillable = ['cow_id', 'morning', 'afternoon', 'evening', 'date'];
 
     public function cow() {
-        return $this->belongsTo(Cattle::class);
+        return $this->belongsTo(Cattle::class, 'cow_id');
     }
 }

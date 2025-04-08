@@ -22,14 +22,14 @@
 
             <nav class="mt-4">
                 <div class="px-4 space-y-1">
-                    <a href="#" class="flex items-center px-4 py-3 text-gray-700 bg-emerald-50 rounded-lg">
+                    <a href="/dashboard" class="flex items-center px-4 py-3 text-gray-700 bg-emerald-50 rounded-lg">
                         <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path>
                         </svg>
                         <span class="ml-3">Dashboard</span>
                     </a>
 
-                    <a href="#" class="flex items-center px-4 py-3 text-gray-600 transition-colors rounded-lg hover:bg-gray-100">
+                    <a href="/cattle" class="flex items-center px-4 py-3 text-gray-600 transition-colors rounded-lg hover:bg-gray-100">
                         <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                         </svg>
