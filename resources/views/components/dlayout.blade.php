@@ -11,7 +11,6 @@
                     </svg>
                 </button>
             </div>
-
             <!-- User Profile Section -->
             <div class="p-4 border-b border-gray-200 bg-gray-50">
                 <div class="flex items-center space-x-3">
@@ -25,7 +24,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Navigation Links -->
             <nav class="mt-4 flex-1 flex flex-col overflow-y-auto">
                 <div class="px-2 space-y-1 flex-1">
