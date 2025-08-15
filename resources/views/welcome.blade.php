@@ -3,6 +3,29 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Smart Farm: Transform your farming with IoT sensors, AI-powered analytics, and real-time insights for crop management, weather monitoring, and smart irrigation.">
+        <meta name="keywords" content="smart farm, smart agriculture, IoT farming, AI farming, crop analytics, weather monitoring, smart irrigation, soil analysis, farm management, precision agriculture">
+        <meta name="author" content="Smart Farm Team">
+        <meta name="robots" content="index, follow">
+
+        <!-- Open Graph / Social Media Meta Tags -->
+        <meta property="og:title" content="Smart Farm - Transform Your Farm with Smart Technology">
+        <meta property="og:description" content="Leverage IoT sensors, real-time analytics, and AI-powered insights to maximize your farm's potential with Smart Farm.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:image" content="{{ asset('/images/smart-farm.jpg') }}">
+        <meta property="og:site_name" content="Smart Farm">
+
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Smart Farm - Transform Your Farm with Smart Technology">
+        <meta name="twitter:description" content="Leverage IoT sensors, real-time analytics, and AI-powered insights to maximize your farm's potential with Smart Farm.">
+        <meta name="twitter:image" content="{{ asset('/images/smart-farm.jpg') }}">
+
+        <!-- Canonical Link -->
+        <link rel="canonical" href="{{ url('/') }}">
 
         <title>Smart Farm</title>
 
@@ -47,9 +70,6 @@
                             @if (Route::has('login'))
                                 <div class="flex items-center space-x-4">
                                     @auth
-                                        {{-- <a href="{{ url('/dashboard') }}" class="text-gray-600 hover:text-[#FF2D20] transition-colors">
-                                            Dashboard
-                                        </a> --}}
                                         <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center px-6 py-2 text-sm font-medium text-white bg-[#FF2D20] rounded-lg hover:bg-[#FF2D20]/90 transition-colors">
                                             Dashboard
                                         </a>

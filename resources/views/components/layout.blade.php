@@ -4,6 +4,29 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Smart Farm: Optimize your farming with IoT sensors, AI-powered analytics, and real-time insights for efficient farm management.">
+        <meta name="keywords" content="smart farm, smart agriculture, IoT farming, AI farming, farm management, precision agriculture, crop analytics, weather monitoring, smart irrigation, soil analysis">
+        <meta name="author" content="Smart Farm Team">
+        <meta name="robots" content="index, follow">
+
+        <!-- Open Graph / Social Media Meta Tags -->
+        <meta property="og:title" content="Smart Farm - Advanced Farm Management Platform">
+        <meta property="og:description" content="Leverage IoT, AI, and real-time analytics to transform your farm with Smart Farm's cutting-edge technology.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:image" content="{{ asset('/images/smart-farm.jpg') }}">
+        <meta property="og:site_name" content="Smart Farm">
+
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Smart Farm - Advanced Farm Management Platform">
+        <meta name="twitter:description" content="Leverage IoT, AI, and real-time analytics to transform your farm with Smart Farm's cutting-edge technology.">
+        <meta name="twitter:image" content="{{ asset('/images/smart-farm.jpg') }}">
+
+        <!-- Canonical Link -->
+        <link rel="canonical" href="{{ url('/') }}">
+
         <title>Smart Farm</title>
         <script src="https://cdn.tailwindcss.com"></script>
 
@@ -22,5 +45,5 @@
     </head>
     <body class="font-sans antialiased">
         {{ $slot }}
-</body>
+    </body>
 </html>

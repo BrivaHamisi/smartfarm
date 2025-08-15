@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="flex h-screen bg-gray-100">
+    <div class="flex h-screen bg-gray-100" x-data="{ open: false, cattleOpen: false }" x-init="() => { if (window.innerWidth < 1024) open = false }">
         <!-- Sidebar Navigation -->
-        <div x-data="{ open: false }" class="fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-lg flex flex-col transform transition-transform duration-300 ease-in-out lg:static lg:transform-none" :class="{ '-translate-x-full': !open, 'translate-x-0': open }">
+        <div class="fixed inset-y-0 left-0 z-30 w-64 bg-white shadow-lg flex flex-col transform transition-transform duration-300 ease-in-out lg:static lg:transform-none" :class="{ '-translate-x-full': !open, 'translate-x-0': open }">
             <!-- Logo Section -->
             <div class="flex items-center justify-between h-16 px-4 border-b border-gray-200">
                 <span class="text-2xl font-bold text-emerald-700 tracking-tight">Smart Farm</span>
@@ -36,20 +36,25 @@
 
                     <!-- Cattle Section with Nested Milk Records -->
                     <div class="space-y-1">
-                        <a href="{{ route('cattle.index') }}" class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 {{ request()->routeIs('cattle.index') ? 'text-emerald-700 bg-emerald-50' : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-700' }}">
-                            <svg class="w-5 h-5 {{ request()->routeIs('cattle.index') ? 'text-emerald-500' : 'text-gray-500' }} transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <button @click="cattleOpen = !cattleOpen" class="flex items-center w-full px-4 py-3 rounded-lg transition-all duration-200 {{ request()->routeIs('cattle.*') ? 'text-emerald-700 bg-emerald-50' : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-700' }}">
+                            <svg class="w-5 h-5 {{ request()->routeIs('cattle.*') ? 'text-emerald-500' : 'text-gray-500' }} transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
                             </svg>
                             <span class="ml-3 font-medium">Cattle</span>
-                        </a>
+                            <svg class="w-5 h-5 ml-auto transition-transform duration-200" :class="{ 'rotate-180': cattleOpen }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
 
                         <!-- Nested Milk Records Link -->
-                        <a href="{{ route('cattle.milk-records.index') }}" class="flex items-center px-4 py-3 ml-6 rounded-lg transition-all duration-200 {{ request()->routeIs('cattle.milk-records.*') ? 'text-emerald-700 bg-emerald-50' : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-700' }}">
-                            <svg class="w-5 h-5 {{ request()->routeIs('cattle.milk-records.*') ? 'text-emerald-500' : 'text-gray-500' }} transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <span class="ml-3 font-medium text-sm">Milk Records</span>
-                        </a>
+                        <div x-show="cattleOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 transform -translate-y-2" x-transition:enter-end="opacity-100 transform translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 transform translate-y-0" x-transition:leave-end="opacity-0 transform -translate-y-2">
+                            <a href="{{ route('cattle.milk-records.index') }}" class="flex items-center px-4 py-3 ml-6 rounded-lg transition-all duration-200 {{ request()->routeIs('cattle.milk-records.*') ? 'text-emerald-700 bg-emerald-50' : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-700' }}">
+                                <svg class="w-5 h-5 {{ request()->routeIs('cattle.milk-records.*') ? 'text-emerald-500' : 'text-gray-500' }} transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span class="ml-3 font-medium text-sm">Milk Records</span>
+                            </a>
+                        </div>
                     </div>
 
                     <a href="{{ route('poultry.index') }}" class="flex items-center px-4 py-3 rounded-lg transition-all duration-200 {{ request()->routeIs('poultry.*') ? 'text-emerald-700 bg-emerald-50' : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-700' }}">
@@ -106,17 +111,33 @@
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-auto">
             <!-- Top Header -->
-            <div class="bg-white shadow-sm border-b border-gray-200">
+            <div class="bg-white shadow-sm border-b border-gray-200 relative z-40">
                 <div class="flex justify-between items-center px-6 py-4">
                     <div class="flex items-center space-x-4">
                         <!-- Hamburger Menu for Mobile -->
-                        <button @click="open = true" class="lg:hidden p-2 text-gray-600 hover:text-gray-900">
+                        <button @click="open = !open" class="lg:hidden p-2 text-gray-600 hover:text-gray-900 z-50 relative">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                             </svg>
                         </button>
                         <h2 class="text-lg font-semibold text-gray-800">
-                            {{ request()->routeIs('dashboard') ? 'Dashboard' : (request()->routeIs('cattle.*') ? 'Cattle' : (request()->routeIs('poultry.*') ? 'Poultry' : (request()->routeIs('calves.*') ? 'Calves' : (request()->routeIs('finances.*') ? 'Finances' : (request()->routeIs('workers.*') ? 'Workers' : (request()->routeIs('profile.*') ? 'Profile' : 'Smart Farm')))))) }}
+                            @if (request()->routeIs('dashboard'))
+                                Dashboard
+                            @elseif (request()->routeIs('cattle.*'))
+                                Cattle
+                            @elseif (request()->routeIs('poultry.*'))
+                                Poultry
+                            @elseif (request()->routeIs('calves.*'))
+                                Calves
+                            @elseif (request()->routeIs('finances.*'))
+                                Finances
+                            @elseif (request()->routeIs('workers.*'))
+                                Workers
+                            @elseif (request()->routeIs('profile.*'))
+                                Profile
+                            @else
+                                Smart Farm
+                            @endif
                         </h2>
                     </div>
                     <div class="flex items-center space-x-4">
@@ -144,6 +165,6 @@
         </div>
 
         <!-- Overlay for Mobile -->
-        <div x-show="open" @click="open = false" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"></div>
+        <div x-show="open" @click="open = false" class="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden" x-cloak></div>
     </div>
 </x-app-layout>

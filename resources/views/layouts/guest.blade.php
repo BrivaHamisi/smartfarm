@@ -5,7 +5,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Smart Farm: Access your account to manage your farm with IoT sensors, AI analytics, and real-time insights for optimized agriculture.">
+        <meta name="keywords" content="smart farm, smart agriculture, IoT farming, AI farming, farm management, precision agriculture, crop analytics, weather monitoring, smart irrigation, soil analysis, login, register">
+        <meta name="author" content="Smart Farm Team">
+        <meta name="robots" content="index, follow">
+
+        <!-- Open Graph / Social Media Meta Tags -->
+        <meta property="og:title" content="{{ config('app.name', 'Smart Farm') }} - Farm Management Platform">
+        <meta property="og:description" content="Sign in or register to leverage Smart Farm's IoT, AI, and real-time analytics for efficient farm management.">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:image" content="{{ asset('/images/smart-farm.jpg') }}">
+        <meta property="og:site_name" content="{{ config('app.name', 'Smart Farm') }}">
+
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ config('app.name', 'Smart Farm') }} - Farm Management Platform">
+        <meta name="twitter:description" content="Sign in or register to leverage Smart Farm's IoT, AI, and real-time analytics for efficient farm management.">
+        <meta name="twitter:image" content="{{ asset('/images/smart-farm.jpg') }}">
+
+        <!-- Canonical Link -->
+        <link rel="canonical" href="{{ url()->current() }}">
+
+        <title>{{ config('app.name', 'Smart Farm') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
