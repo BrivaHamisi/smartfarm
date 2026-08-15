@@ -14,15 +14,19 @@ trait BelongsToUser
     protected static function bootBelongsToUser(): void
     {
         static::creating(function ($model) {
-            if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user && ! $user->is_admin) {
                 $model->user_id = static::resolveFarmOwnerId();
             }
         });
 
         static::addGlobalScope('user', function (Builder $builder) {
-            if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user && ! $user->is_admin) {
                 $builder->where(
-                    $builder->getModel()->getTable() . '.user_id',
+                    $builder->getModel()->getTable().'.user_id',
                     static::resolveFarmOwnerId()
                 );
             }
@@ -32,5 +36,10 @@ trait BelongsToUser
     protected static function resolveFarmOwnerId(): int
     {
         return session('farm_owner_id', Auth::id());
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
 }

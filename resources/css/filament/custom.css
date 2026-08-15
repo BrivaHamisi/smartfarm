@@ -1,0 +1,91 @@
+/* SmartFarm dashboard theme overrides */
+
+:root {
+    --font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ── Brand logo ─────────────────────────────────────────── */
+.fi-logo {
+    padding-inline: 0.25rem;
+}
+
+/* ── Sidebar ────────────────────────────────────────────── */
+.fi-sidebar-nav {
+    padding-top: 0.75rem;
+}
+
+.fi-sidebar-item a {
+    border-radius: 0.625rem;
+    font-weight: 500;
+}
+
+.fi-sidebar-item-active a {
+    background-color: color-mix(in srgb, var(--primary-500) 12%, transparent);
+    box-shadow: inset 3px 0 0 0 var(--primary-600);
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-label,
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: var(--primary-700);
+}
+
+.dark .fi-sidebar-item-active a {
+    background-color: color-mix(in srgb, var(--primary-500) 18%, transparent);
+}
+
+.dark .fi-sidebar-item-active .fi-sidebar-item-label,
+.dark .fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: var(--primary-400);
+}
+
+/* ── Topbar ─────────────────────────────────────────────── */
+.fi-topbar {
+    box-shadow: 0 1px 0 0 rgb(0 0 0 / 0.04);
+}
+
+/* ── Stats overview cards ───────────────────────────────── */
+.fi-wi-stats-overview-stat {
+    border-radius: 0.75rem;
+    border: 1px solid rgb(15 23 42 / 0.06);
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12);
+}
+
+.fi-wi-stats-overview-stat .fi-wi-stats-overview-stat-icon {
+    border-radius: 0.625rem;
+}
+
+.dark .fi-wi-stats-overview-stat {
+    border-color: rgb(255 255 255 / 0.08);
+    box-shadow: none;
+}
+
+/* ── Sections / tables ──────────────────────────────────── */
+.fi-section {
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 28px -16px rgb(15 23 42 / 0.10);
+}
+
+.fi-ta table thead th {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.72rem;
+    color: rgb(71 85 105 / 0.85);
+}
+
+.dark .fi-ta table thead th {
+    color: rgb(148 163 184 / 0.85);
+}
+
+/* ── Buttons ────────────────────────────────────────────── */
+.fi-btn {
+    font-weight: 500;
+}
+
+/* ── Dashboard greeting ─────────────────────────────────── */
+.smartfarm-greeting {
+    letter-spacing: -0.02em;
+}
