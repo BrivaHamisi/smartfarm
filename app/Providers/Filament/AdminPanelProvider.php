@@ -62,6 +62,7 @@ class AdminPanelProvider extends PanelProvider
     {
         \Filament\Support\Facades\FilamentAsset::register([
             \Filament\Support\Assets\Css::make('smartfarm-custom', __DIR__.'/../../../resources/css/filament/custom.css'),
+            \Filament\Support\Assets\Css::make('smartfarm-console', __DIR__.'/../../../resources/css/filament/console.css'),
         ]);
     }
 }

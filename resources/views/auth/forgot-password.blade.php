@@ -1,5 +1,10 @@
 <x-layout>
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen relative">
+        <!-- Theme toggle -->
+        <div class="absolute top-4 right-4 z-20">
+            <x-theme-toggle />
+        </div>
+
         <!-- Enhanced Image Section -->
         <div class="hidden lg:flex w-1/2 relative overflow-hidden">
             <!-- Main background image -->
@@ -65,16 +70,16 @@
         </div>
 
         <!-- Form Section -->
-        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 px-8 lg:px-12 flex flex-col justify-center">
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-zinc-950 px-8 lg:px-12 flex flex-col justify-center">
             <div class="w-full max-w-md mx-auto space-y-8">
                 <!-- Logo and Title -->
                 <div class="flex items-center justify-start space-x-3">
                     <x-application-logo class="h-8 w-8 text-[#FF2D20]" />
-                    <span class="text-xl font-bold text-gray-800">Smart Farm</span>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">Smart Farm</span>
                 </div>
 
                 <!-- Description -->
-                <div class="text-gray-600">
+                <div class="text-gray-600 dark:text-zinc-400">
                     {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
                 </div>
 
@@ -93,7 +98,7 @@
                             :value="old('email')" 
                             required 
                             autofocus 
-                            class="block w-full px-4 py-3 rounded-lg border-gray-200 focus:ring-[#FF2D20] focus:border-[#FF2D20] transition duration-150 ease-in-out" 
+                            class="block w-full px-4 py-3 rounded-lg border-gray-200 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white focus:ring-[#FF2D20] focus:border-[#FF2D20] transition duration-150 ease-in-out" 
                         />
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>

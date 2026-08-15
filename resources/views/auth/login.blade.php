@@ -1,5 +1,10 @@
 <x-layout>
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen relative">
+        <!-- Theme toggle -->
+        <div class="absolute top-4 right-4 z-20">
+            <x-theme-toggle />
+        </div>
+
         <!-- Enhanced Image Section -->
         <div class="hidden lg:flex w-1/2 relative overflow-hidden">
             <!-- Main background image -->
@@ -50,7 +55,7 @@
         </div>
 
         <!-- Enhanced Form Section -->
-        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 px-4 sm:px-8 lg:px-12 flex flex-col justify-center py-12">
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-zinc-950 px-4 sm:px-8 lg:px-12 flex flex-col justify-center py-12">
             <div class="w-full max-w-md mx-auto">
                 <!-- Logo and Title -->
                 <div class="flex items-center justify-start space-x-3 mb-8">
@@ -60,17 +65,17 @@
                         </svg>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold text-gray-900">Welcome Back</h2>
-                        <p class="text-sm text-gray-500">Sign in to your farm dashboard</p>
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Welcome Back</h2>
+                        <p class="text-sm text-gray-500 dark:text-zinc-400">Sign in to your farm dashboard</p>
                     </div>
                 </div>
 
-                <form id="auth-form" method="POST" action="{{ route('login') }}" class="space-y-6 bg-white rounded-2xl shadow-sm ring-1 ring-gray-200 p-6 sm:p-8" novalidate>
+                <form id="auth-form" method="POST" action="{{ route('login') }}" class="space-y-6 bg-white rounded-2xl shadow-sm ring-1 ring-gray-200 p-6 sm:p-8 dark:bg-zinc-900 dark:ring-zinc-700/60" novalidate>
                     @csrf
                     
                     <!-- Email -->
                     <div class="space-y-1.5">
-                        <label for="email" class="block text-sm font-medium text-gray-700">
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                             {{ __('Email') }}
                         </label>
                         <input 
@@ -83,19 +88,19 @@
                             autocomplete="email"
                             placeholder="you@example.com"
                             @error('email') aria-invalid="true" aria-describedby="email-error" @enderror
-                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 transition duration-150 ease-in-out
+                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 dark:text-white dark:placeholder-zinc-500 transition duration-150 ease-in-out
                                 focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
-                                @error('email') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 @else border-gray-300 @enderror"
+                                @error('email') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 dark:border-red-500 dark:bg-red-950/40 @else border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 @enderror"
                         >
                         @error('email')
-                            <p id="email-error" role="alert" class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
+                            <p id="email-error" role="alert" class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Password -->
                     <div class="space-y-1.5">
                         <div class="flex items-center justify-between">
-                            <label for="password" class="block text-sm font-medium text-gray-700">
+                            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                                 {{ __('Password') }}
                             </label>
                             @if (Route::has('password.request'))
@@ -112,12 +117,12 @@
                             autocomplete="current-password"
                             placeholder="••••••••"
                             @error('password') aria-invalid="true" aria-describedby="password-error" @enderror
-                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 transition duration-150 ease-in-out
+                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 dark:text-white dark:placeholder-zinc-500 transition duration-150 ease-in-out
                                 focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
-                                @error('password') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 @else border-gray-300 @enderror"
+                                @error('password') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 dark:border-red-500 dark:bg-red-950/40 @else border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 @enderror"
                         >
                         @error('password')
-                            <p id="password-error" role="alert" class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
+                            <p id="password-error" role="alert" class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -128,9 +133,9 @@
                                 id="remember_me" 
                                 type="checkbox" 
                                 name="remember" 
-                                class="h-4 w-4 text-[#FF2D20] focus:ring-[#FF2D20]/50 border-gray-300 rounded transition duration-150 ease-in-out"
+                                class="h-4 w-4 text-[#FF2D20] focus:ring-[#FF2D20]/50 border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 rounded transition duration-150 ease-in-out"
                             >
-                            <label for="remember_me" class="ml-2 block text-sm text-gray-600">
+                            <label for="remember_me" class="ml-2 block text-sm text-gray-600 dark:text-zinc-400">
                                 {{ __('Remember me') }}
                             </label>
                         </div>
@@ -140,14 +145,14 @@
                     <button 
                         id="submit-button"
                         type="submit" 
-                        class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-[#FF2D20] hover:bg-[#e02717] active:bg-[#c81f12] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] transition-all duration-150 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed"
+                        class="w-full inline-flex items-center justify-center gap-2 py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-[#FF2D20] hover:bg-[#e02717] active:bg-[#c81f12] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] dark:ring-offset-zinc-900 transition-all duration-150 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                         <span id="submit-label">{{ __('Log in') }}</span>
                     </button>
 
                     <!-- Register Link -->
                     @if (Route::has('register'))
-                        <p class="pt-2 text-center text-sm text-gray-600">
+                        <p class="pt-2 text-center text-sm text-gray-600 dark:text-zinc-400">
                             Don't have an account?
                             <a href="{{ route('register') }}" class="font-medium text-[#FF2D20] hover:text-[#e02717] transition-colors duration-150">
                                 Create one now

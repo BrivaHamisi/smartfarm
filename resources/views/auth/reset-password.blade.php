@@ -1,5 +1,10 @@
 <x-layout>
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen relative">
+        <!-- Theme toggle -->
+        <div class="absolute top-4 right-4 z-20">
+            <x-theme-toggle />
+        </div>
+
         <!-- Left Image Section -->
         <div class="hidden lg:flex w-1/2 relative overflow-hidden">
             <!-- Main background image -->
@@ -50,14 +55,14 @@
         </div>
 
         <!-- Form Section -->
-        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 px-8 lg:px-12 flex flex-col justify-center">
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-zinc-950 px-8 lg:px-12 flex flex-col justify-center">
             <div class="w-full max-w-md mx-auto">
                 <!-- Logo and Title -->
                 <div class="flex items-center justify-start space-x-3 mb-8">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#FF2D20]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
-                    <span class="text-xl font-bold text-gray-800">Reset Password</span>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">Reset Password</span>
                 </div>
 
                 <form method="POST" action="{{ route('password.store') }}" class="space-y-6">
@@ -68,7 +73,7 @@
 
                     <!-- Email -->
                     <div class="space-y-1">
-                        <label for="email" class="block text-sm font-medium text-gray-700">
+                        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                             {{ __('Email') }}
                         </label>
                         <input 
@@ -79,17 +84,17 @@
                             required 
                             autofocus 
                             autocomplete="username"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
+                            class="block w-full px-4 py-3 rounded-lg border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
                                 @error('email') border-red-500 @enderror"
                         >
                         @error('email')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- New Password -->
                     <div class="space-y-1">
-                        <label for="password" class="block text-sm font-medium text-gray-700">
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                             {{ __('New Password') }}
                         </label>
                         <input 
@@ -98,17 +103,17 @@
                             name="password" 
                             required 
                             autocomplete="new-password"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
+                            class="block w-full px-4 py-3 rounded-lg border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
                                 @error('password') border-red-500 @enderror"
                         >
                         @error('password')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Confirm Password -->
                     <div class="space-y-1">
-                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
+                        <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                             {{ __('Confirm Password') }}
                         </label>
                         <input 
@@ -117,15 +122,15 @@
                             name="password_confirmation" 
                             required 
                             autocomplete="new-password"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            class="block w-full px-4 py-3 rounded-lg border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out"
                         >
                         @error('password_confirmation')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Password Requirements -->
-                    <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
+                    <div class="bg-gray-50 rounded-lg p-4 text-sm text-gray-600 dark:bg-zinc-800/60 dark:text-zinc-400">
                         <p class="font-medium mb-2">Password requirements:</p>
                         <ul class="space-y-1 list-disc list-inside">
                             <li>Minimum 8 characters</li>
@@ -138,13 +143,13 @@
                     <!-- Submit Button -->
                     <button 
                         type="submit" 
-                        class="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#FF2D20] hover:bg-[#e02717] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] transition-all duration-150 ease-in-out"
+                        class="w-full flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#FF2D20] hover:bg-[#e02717] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] dark:ring-offset-zinc-900 transition-all duration-150 ease-in-out"
                     >
                         {{ __('Reset Password') }}
                     </button>
 
                     <!-- Back to Login Link -->
-                    <p class="mt-6 text-center text-sm text-gray-600">
+                    <p class="mt-6 text-center text-sm text-gray-600 dark:text-zinc-400">
                         Remember your password?
                         <a href="{{ route('login') }}" class="font-medium text-[#FF2D20] hover:text-[#e02717] transition-colors duration-150 ml-1">
                             Back to login

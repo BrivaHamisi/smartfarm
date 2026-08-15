@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\TableWidget;
+use Illuminate\Contracts\View\View;
 
 class ActivityLogTable extends TableWidget
 {
@@ -17,7 +18,7 @@ class ActivityLogTable extends TableWidget
         return 'Recent activity';
     }
 
-    protected function getTableColumnSpan(): int | string | array
+    public function getColumnSpan(): int | string | array
     {
         return 'full';
     }
@@ -32,34 +33,13 @@ class ActivityLogTable extends TableWidget
             )
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d M Y, H:i')
+                    ->dateTime('M d, H:i')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('User')
-                    ->badge()
-                    ->color('gray')
-                    ->placeholder('Guest / system'),
                 Tables\Columns\TextColumn::make('action')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'deleted' => 'danger',
-                        'failed_login' => 'warning',
-                        'login', 'registered', 'invoice_generated' => 'success',
-                        default => 'gray',
-                    })
-                    ->formatStateUsing(fn (string $state): string => ActivityLog::ACTIONS[$state] ?? ucfirst($state))
+                    ->label('Action')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->limit(60)
-                    ->tooltip(fn (Tables\Columns\TextColumn $column): ?string => $column->getState()),
-                Tables\Columns\TextColumn::make('farm.name')
-                    ->label('Farm')
-                    ->badge()
-                    ->color('primary'),
-                Tables\Columns\TextColumn::make('ip_address')
-                    ->label('IP')
-                    ->toggleable(),
             ])
+            ->content(fn (): View => view('filament.widgets.console.activity'))
             ->filters([
                 Tables\Filters\SelectFilter::make('action')
                     ->options(ActivityLog::ACTIONS),

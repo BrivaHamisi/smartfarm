@@ -5,6 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- Theme init (before paint, prevents flash of wrong theme) -->
+    <script>
+        (function () {
+            try {
+                var stored = localStorage.getItem('theme');
+                var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.classList.toggle('dark', dark);
+                document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+            } catch (e) {}
+        })();
+    </script>
+
     <!-- SEO Meta Tags -->
     <meta name="description"
         content="Smart Farm: Optimize your farming with IoT sensors, AI-powered analytics, and real-time insights for efficient farm management.">
@@ -37,6 +49,9 @@
 
     <title>Smart Farm</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { darkMode: 'class' };
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -939,6 +954,17 @@
 
 <body class="font-sans antialiased">
     {{ $slot }}
+
+    <script>
+        window.sfToggleTheme = function () {
+            var dark = document.documentElement.classList.toggle('dark');
+            try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+            document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+            document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
+                b.setAttribute('aria-pressed', String(dark));
+            });
+        };
+    </script>
 </body>
 
 </html>

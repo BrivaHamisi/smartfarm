@@ -31,7 +31,7 @@ class AdminConsole extends BaseDashboard
 
     protected static ?string $title = 'Monitoring Console';
 
-    protected static string $view = 'filament-panels::pages.dashboard';
+    protected static string $view = 'filament.pages.admin-console';
 
     public static function canAccess(): bool
     {

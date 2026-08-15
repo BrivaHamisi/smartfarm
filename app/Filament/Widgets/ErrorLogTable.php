@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\TableWidget;
+use Illuminate\Contracts\View\View;
 
 class ErrorLogTable extends TableWidget
 {
@@ -17,7 +18,7 @@ class ErrorLogTable extends TableWidget
         return 'Error log';
     }
 
-    protected function getTableColumnSpan(): int | string | array
+    public function getColumnSpan(): int | string | array
     {
         return 'full';
     }
@@ -32,38 +33,13 @@ class ErrorLogTable extends TableWidget
             )
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d M Y, H:i')
+                    ->dateTime('M d, H:i')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('level')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'critical', 'error' => 'danger',
-                        'warning' => 'warning',
-                        default => 'gray',
-                    })
+                    ->label('Level')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->badge()
-                    ->color('gray')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('message')->limit(70)->tooltip(fn (Tables\Columns\TextColumn $column): ?string => $column->getState()),
-                Tables\Columns\TextColumn::make('file')
-                    ->label('Location')
-                    ->limit(40)
-                    ->tooltip(fn (Tables\Columns\TextColumn $column): ?string => $column->getState()),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('User')
-                    ->badge()
-                    ->color('gray')
-                    ->placeholder('—'),
-                Tables\Columns\TextColumn::make('farm.name')
-                    ->label('Farm')
-                    ->badge()
-                    ->color('primary')
-                    ->placeholder('—'),
-                Tables\Columns\TextColumn::make('url')->limit(50)->toggleable(),
-                Tables\Columns\TextColumn::make('ip_address')->label('IP')->toggleable(),
             ])
+            ->content(fn (): View => view('filament.widgets.console.error-log'))
             ->filters([
                 Tables\Filters\SelectFilter::make('level')
                     ->options([

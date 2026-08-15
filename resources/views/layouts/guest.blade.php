@@ -4,6 +4,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        <!-- Theme init (before paint, prevents flash of wrong theme) -->
+        <script>
+            (function () {
+                try {
+                    var stored = localStorage.getItem('theme');
+                    var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    document.documentElement.classList.toggle('dark', dark);
+                    document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+                } catch (e) {}
+            })();
+        </script>
+
         <!-- SEO Meta Tags -->
         <meta name="description" content="Smart Farm: Optimize your farming with IoT sensors, AI-powered analytics, and real-time insights for efficient farm management.">
         <meta name="keywords" content="smart farm, smart agriculture, IoT farming, AI farming, farm management, precision agriculture, crop analytics, weather monitoring, smart irrigation, soil analysis">
@@ -29,6 +41,9 @@
 
         <title>Smart Farm</title>
         <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = { darkMode: 'class' };
+        </script>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -43,17 +58,32 @@
             </style>
         @endif
     </head>
-    <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <body class="font-sans text-gray-900 antialiased dark:text-white">
+        <div class="relative min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-zinc-950">
+            <div class="absolute top-4 right-4">
+                <x-theme-toggle />
+            </div>
+
             <div>
                 <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+                    <x-application-logo class="w-20 h-20 fill-current text-gray-500 dark:text-zinc-400" />
                 </a>
             </div>
 
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg dark:bg-zinc-900 dark:shadow-none dark:ring-1 dark:ring-zinc-800">
                 {{ $slot }}
             </div>
         </div>
+
+        <script>
+            window.sfToggleTheme = function () {
+                var dark = document.documentElement.classList.toggle('dark');
+                try { localStorage.setItem('theme', dark ? 'dark' : 'light'); } catch (e) {}
+                document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+                document.querySelectorAll('[data-theme-toggle]').forEach(function (b) {
+                    b.setAttribute('aria-pressed', String(dark));
+                });
+            };
+        </script>
     </body>
 </html>

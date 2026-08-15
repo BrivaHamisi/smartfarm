@@ -7,6 +7,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\Concerns\InteractsWithPageFilters;
 use Filament\Widgets\TableWidget;
+use Illuminate\Contracts\View\View;
 
 class RecentAuthActivityTable extends TableWidget
 {
@@ -15,6 +16,11 @@ class RecentAuthActivityTable extends TableWidget
     protected function getTableHeading(): string
     {
         return 'Sign-ins and failed attempts';
+    }
+
+    public function getColumnSpan(): int | string | array
+    {
+        return 'full';
     }
 
     public function table(Table $table): Table
@@ -28,30 +34,13 @@ class RecentAuthActivityTable extends TableWidget
             )
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime('d M Y, H:i')
+                    ->dateTime('M d, H:i')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('action')
-                    ->badge()
-                    ->color(fn (string $state): string => match ($state) {
-                        'failed_login' => 'danger',
-                        'login' => 'success',
-                        default => 'gray',
-                    })
-                    ->formatStateUsing(fn (string $state): string => ActivityLog::ACTIONS[$state] ?? ucfirst($state)),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('User')
-                    ->badge()
-                    ->color('gray')
-                    ->placeholder('—'),
-                Tables\Columns\TextColumn::make('farm.name')
-                    ->label('Farm')
-                    ->badge()
-                    ->color('primary'),
-                Tables\Columns\TextColumn::make('description')->limit(60),
-                Tables\Columns\TextColumn::make('ip_address')
-                    ->label('IP')
-                    ->toggleable(),
+                    ->label('Action')
+                    ->sortable(),
             ])
+            ->content(fn (): View => view('filament.widgets.console.security'))
             ->defaultSort('created_at', 'desc')
             ->paginated([10, 25]);
     }

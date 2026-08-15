@@ -1,5 +1,10 @@
 <x-layout>
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen relative">
+        <!-- Theme toggle -->
+        <div class="absolute top-4 right-4 z-20">
+            <x-theme-toggle />
+        </div>
+
         <!-- Left Image Section -->
         <div class="hidden lg:flex w-1/2 relative overflow-hidden">
             <!-- Main background image -->
@@ -50,23 +55,23 @@
         </div>
 
         <!-- Form Section -->
-        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 px-8 lg:px-12 flex flex-col justify-center">
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-zinc-900 dark:to-zinc-950 px-8 lg:px-12 flex flex-col justify-center">
             <div class="w-full max-w-md mx-auto">
                 <!-- Logo and Title -->
                 <div class="flex items-center justify-start space-x-3 mb-8">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#FF2D20]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                     </svg>
-                    <span class="text-xl font-bold text-gray-800">Security Verification</span>
+                    <span class="text-xl font-bold text-gray-800 dark:text-white">Security Verification</span>
                 </div>
 
                 <!-- Security Notice -->
-                <div class="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg">
+                <div class="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-lg dark:bg-blue-950/50 dark:border-blue-900">
                     <div class="flex items-center space-x-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 dark:text-blue-400" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
                         </svg>
-                        <p class="text-sm text-blue-700">
+                        <p class="text-sm text-blue-700 dark:text-blue-300">
                             {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
                         </p>
                     </div>
@@ -77,7 +82,7 @@
                     
                     <!-- Password -->
                     <div class="space-y-1">
-                        <label for="password" class="block text-sm font-medium text-gray-700">
+                        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                             {{ __('Password') }}
                         </label>
                         <input 
@@ -86,17 +91,17 @@
                             name="password" 
                             required 
                             autocomplete="current-password"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
+                            class="block w-full px-4 py-3 rounded-lg border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 dark:text-white shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
                                 @error('password') border-red-500 @enderror"
                         >
                         @error('password')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-2 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Security Tips -->
-                    <div class="bg-gray-50 rounded-lg p-4">
-                        <p class="text-sm text-gray-600">
+                    <div class="bg-gray-50 rounded-lg p-4 dark:bg-zinc-800/60">
+                        <p class="text-sm text-gray-600 dark:text-zinc-400">
                             <span class="font-medium">Security Tip:</span> Always ensure you're on a secure connection and no one can see your screen before entering sensitive information.
                         </p>
                     </div>
@@ -105,7 +110,7 @@
                     <div class="flex justify-end space-x-4 items-center">
                         <button 
                             type="submit" 
-                            class="flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#FF2D20] hover:bg-[#e02717] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] transition-all duration-150 ease-in-out"
+                            class="flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#FF2D20] hover:bg-[#e02717] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] dark:ring-offset-zinc-900 transition-all duration-150 ease-in-out"
                         >
                             {{ __('Confirm') }}
                         </button>
