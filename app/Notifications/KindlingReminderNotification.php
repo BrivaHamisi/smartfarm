@@ -23,13 +23,15 @@ class KindlingReminderNotification extends Notification
             ->greeting("Hello {$notifiable->name},")
             ->line("Doe **{$this->record->doe_id}** is expected to kindle on **{$this->record->expected_kindling_date->format('d M Y')}**.")
             ->line('That is in approximately 1 week. Please prepare the nest box and ensure the doe has plenty of nesting material.')
-            ->action('View Rabbit Breeding Records', url('/rabbits/breeding'))
+            ->action('View Rabbit Breeding Records', url('/dashboard/rabbit-breeding-records'))
             ->line('Thank you for using the Farm Management System.');
     }
 
     public function toArray($notifiable): array
     {
         return [
+            'title' => 'Kindling reminder',
+            'body' => "Doe {$this->record->doe_id} is expected to kindle on {$this->record->expected_kindling_date->format('d M Y')}.",
             'message' => "Kindling reminder: Doe {$this->record->doe_id} expected to kindle on {$this->record->expected_kindling_date->format('d M Y')}",
             'record_id' => $this->record->id,
         ];

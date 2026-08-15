@@ -25,6 +25,11 @@ class WorkersResource extends Resource
 
     protected static ?string $pluralModelLabel = 'workers';
 
+    public static function canViewAny(): bool
+    {
+        return ! (bool) (auth()->user()?->isEditor());
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -49,10 +49,10 @@ abstract class FarmRecordPolicy
 
     protected function owns(User $user, Model $record): bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin()) {
             return true;
         }
 
-        return (int) $record->user_id === (int) session('farm_owner_id', $user->id);
+        return (int) $record->user_id === (int) ($user->farmId() ?? $user->id);
     }
 }

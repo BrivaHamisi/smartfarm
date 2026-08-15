@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use App\Models\Cattle;
 use App\Models\DorperBreedingRecord;
+use App\Models\Finances;
 use App\Models\MilkProduction;
 use App\Models\Poultry;
 use App\Models\RabbitBreedingRecord;
@@ -62,14 +63,25 @@ class StatsOverview extends BaseWidget
                 ->description('across the rabbitry')
                 ->icon('heroicon-o-heart')
                 ->color('warning'),
-            Stat::make('Workers', number_format(Workers::query()->count()))
-                ->description('on the farm team')
-                ->icon('heroicon-o-user-group')
-                ->color('info'),
         ];
 
-        if ((bool) (auth()->user()?->is_admin)) {
-            $stats[] = Stat::make('Farm owners', number_format(User::query()->where('is_admin', false)->count()))
+        if (! (bool) auth()->user()?->isEditor()) {
+            $stats[] = Stat::make('Workers', number_format(Workers::query()->count()))
+                ->description('on the farm team')
+                ->icon('heroicon-o-user-group')
+                ->color('info');
+
+            $monthStart = today()->startOfMonth();
+            $cashIn = (float) Finances::query()->where('type', 'income')->whereDate('date', '>=', $monthStart)->sum('amount');
+            $cashOut = (float) Finances::query()->where('type', 'expense')->whereDate('date', '>=', $monthStart)->sum('amount');
+            $stats[] = Stat::make('Cash flow (this month)', 'KSh '.number_format($cashIn - $cashOut))
+                ->description(sprintf('+%s in / −%s out', number_format($cashIn), number_format($cashOut)))
+                ->icon('heroicon-o-banknotes')
+                ->color('info');
+        }
+
+        if ((bool) auth()->user()?->isAdmin()) {
+            $stats[] = Stat::make('Farm owners', number_format(User::query()->where('role', User::ROLE_OWNER)->count()))
                 ->description('accounts on the platform')
                 ->icon('heroicon-o-users')
                 ->color('gray');

@@ -29,7 +29,42 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role' => 'owner',
+            'farm_owner_id' => null,
         ];
+    }
+
+    /**
+     * Indicate that the user is a farm owner.
+     */
+    public function owner(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'owner',
+            'farm_owner_id' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is an editor working on another farm.
+     */
+    public function editor(int $farmOwnerId): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'editor',
+            'farm_owner_id' => $farmOwnerId,
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a platform administrator.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'admin',
+            'farm_owner_id' => null,
+        ]);
     }
 
     /**

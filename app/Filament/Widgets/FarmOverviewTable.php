@@ -28,12 +28,12 @@ class FarmOverviewTable extends TableWidget
 
     public static function canView(): bool
     {
-        return (bool) (auth()->user()?->is_admin);
+        return (bool) (auth()->user()?->isAdmin());
     }
 
     protected function getTableHeading(): string
     {
-        return 'Farm owners';
+        return 'Accounts';
     }
 
     public function table(Table $table): Table
@@ -65,7 +65,16 @@ class FarmOverviewTable extends TableWidget
                     ->badge()
                     ->color('primary')
                     ->alignEnd(),
-                Tables\Columns\IconColumn::make('is_admin')->label('Admin')->boolean()->toggleable(),
+                Tables\Columns\TextColumn::make('role')
+                    ->label('Role')
+                    ->badge()
+                    ->formatStateUsing(fn (string $state): string => ucfirst($state))
+                    ->colors([
+                        'primary' => fn (string $state): bool => $state === User::ROLE_OWNER,
+                        'success' => fn (string $state): bool => $state === User::ROLE_ADMIN,
+                        'warning' => fn (string $state): bool => $state === User::ROLE_EDITOR,
+                    ])
+                    ->toggleable(),
             ])
             ->paginated(false)
             ->defaultPaginationPageOption(5);

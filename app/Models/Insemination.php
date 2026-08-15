@@ -10,8 +10,8 @@ class Insemination extends Model
 {
     use BelongsToUser;
 
-    protected $fillable = ['user_id', 'cow_id', 'date', 'bull_number', 'successful', 'expected_dob'];
-    protected $casts = ['date' => 'date', 'expected_dob' => 'date'];
+    protected $fillable = ['user_id', 'cow_id', 'date', 'bull_number', 'successful', 'expected_dob', 'reminder_sent'];
+    protected $casts = ['date' => 'date', 'expected_dob' => 'date', 'reminder_sent' => 'boolean'];
 
     public function cow()
     {
