@@ -1,16 +1,16 @@
 <?php
+// app/Models/Workers.php
 
 namespace App\Models;
 
-use Illuminate\Support\Facades\Hash;
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
 
 class Workers extends Model
 {
-    protected $fillable = ['name', 'salary', 'email', 'password', 'employment_date', 'phone', 'position'];
+    use BelongsToUser;
 
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = Hash::make($value);
-    }
+    protected $fillable = ['user_id', 'name', 'salary', 'email', 'password', 'employment_date', 'phone', 'position'];
+    protected $hidden = ['password'];
+    protected $casts = ['employment_date' => 'date'];
 }

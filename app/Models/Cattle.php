@@ -1,26 +1,24 @@
 <?php
+// app/Models/Cattle.php
 
 namespace App\Models;
 
+use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Cattle extends Model
 {
-    protected $fillable = ['name', 'age', 'weight_kg', 'breed', 'gender'];
+    use HasFactory, BelongsToUser;
 
-    public function milkProductions() {
+    protected $fillable = ['user_id', 'name', 'age', 'weight_kg', 'breed', 'gender'];
+
+    public function milkProductions()
+    {
         return $this->hasMany(MilkProduction::class, 'cow_id');
     }
-
-    public function inseminations() {
-        return $this->hasMany(Insemination::class);
-    }
-
-    public function calves() {
-        return $this->hasMany(Calf::class);
-    }
-
-    public function checkups() {
-        return $this->hasMany(Checkup::class);
+    public function calves()
+    {
+        return $this->hasMany(Calf::class, 'cow_id');
     }
 }

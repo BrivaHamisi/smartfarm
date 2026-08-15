@@ -1,104 +1,66 @@
 <x-dlayout>
-    <div class="p-8">
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-            <div class="bg-white rounded-lg p-6 border border-gray-100">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="text-sm font-medium text-gray-500">Total Income</div>
-                        <div class="mt-2 flex items-baseline">
-                            <span class="text-2xl font-semibold text-gray-900">{{ $totalIncome }}</span>
-                            <span class="ml-2 text-sm text-gray-500">KES</span>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-emerald-50 rounded-lg">
-                        <svg class="w-6 h-6 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                </div>
+    <div class="p-6 space-y-6">
+        @if(session('success'))<div class="bg-emerald-50 border border-emerald-200 text-emerald-800 px-4 py-3 rounded-xl text-sm">{{ session('success') }}</div>@endif
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Total Income</p>
+                <p class="text-3xl font-bold text-emerald-600 mt-1">{{ number_format($totalIncome) }}<span class="text-sm font-normal text-gray-400 ml-1">KES</span></p>
             </div>
-            <div class="bg-white rounded-lg p-6 border border-gray-100">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="text-sm font-medium text-gray-500">Total Expenses</div>
-                        <div class="mt-2 flex items-baseline">
-                            <span class="text-2xl font-semibold text-gray-900">{{ $totalExpenses }}</span>
-                            <span class="ml-2 text-sm text-gray-500">KES</span>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-red-50 rounded-lg">
-                        <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Total Expenses</p>
+                <p class="text-3xl font-bold text-red-600 mt-1">{{ number_format($totalExpenses) }}<span class="text-sm font-normal text-gray-400 ml-1">KES</span></p>
             </div>
-            <div class="bg-white rounded-lg p-6 border border-gray-100">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="text-sm font-medium text-gray-500">Net Profit</div>
-                        <div class="mt-2 flex items-baseline">
-                            <span class="text-2xl font-semibold text-gray-900">{{ $netProfit }}</span>
-                            <span class="ml-2 text-sm text-gray-500">KES</span>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-blue-50 rounded-lg">
-                        <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
-                        </svg>
-                    </div>
-                </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Net Profit</p>
+                <p class="text-3xl font-bold {{ $netProfit >= 0 ? 'text-emerald-600' : 'text-red-600' }} mt-1">{{ number_format($netProfit) }}<span class="text-sm font-normal text-gray-400 ml-1">KES</span></p>
             </div>
-            <div class="bg-white rounded-lg p-6 border border-gray-100">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="text-sm font-medium text-gray-500">Today's Expenses</div>
-                        <div class="mt-2 flex items-baseline">
-                            <span class="text-2xl font-semibold text-gray-900">{{ $todayExpenses }}</span>
-                            <span class="ml-2 text-sm text-gray-500">KES</span>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-amber-50 rounded-lg">
-                        <svg class="w-6 h-6 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                        </svg>
-                    </div>
-                </div>
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+                <p class="text-xs text-gray-400 uppercase tracking-wider">Today's Expenses</p>
+                <p class="text-3xl font-bold text-amber-600 mt-1">{{ number_format($todayExpenses) }}<span class="text-sm font-normal text-gray-400 ml-1">KES</span></p>
             </div>
         </div>
 
-        <!-- Finances Table -->
-        <div class="bg-white rounded-lg shadow-sm">
-            <div class="p-6">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-lg font-medium text-gray-900">Financial Records</h3>
-                    <a href="{{ route('finances.create') }}" class="text-sm text-emerald-600 hover:text-emerald-700">Add Transaction</a>
-                </div>
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead>
-                            <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach ($financials as $record)
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $record->id }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ucfirst($record->type) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ucfirst($record->category) }}</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $record->amount }} KES</td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $record->date }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100">
+            <div class="p-5 border-b border-gray-50 flex items-center justify-between">
+                <h3 class="font-semibold text-gray-900">Financial Records</h3>
+                @unless(session('is_worker'))
+                <a href="{{ route('finances.create') }}" class="text-xs bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg hover:bg-emerald-100">+ Add Transaction</a>
+                @endunless
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead><tr class="border-b border-gray-50">
+                        <th class="px-5 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Type</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Category</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Amount</th>
+                        <th class="px-5 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Description</th>
+                        @unless(session('is_worker'))<th class="px-5 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>@endunless
+                    </tr></thead>
+                    <tbody class="divide-y divide-gray-50">
+                        @forelse($financials as $record)
+                        <tr class="hover:bg-gray-50 transition-colors">
+                            <td class="px-5 py-4 text-sm text-gray-900">{{ $record->date->format('d M Y') }}</td>
+                            <td class="px-5 py-4"><span class="px-2.5 py-1 text-xs font-semibold rounded-full {{ $record->type === 'income' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' }}">{{ ucfirst($record->type) }}</span></td>
+                            <td class="px-5 py-4 text-sm text-gray-600">{{ ucfirst(str_replace('_', ' ', $record->category)) }}</td>
+                            <td class="px-5 py-4 text-sm font-semibold {{ $record->type === 'income' ? 'text-emerald-700' : 'text-red-700' }}">{{ number_format($record->amount) }} KES</td>
+                            <td class="px-5 py-4 text-sm text-gray-500">{{ $record->description ?? '—' }}</td>
+                            @unless(session('is_worker'))
+                            <td class="px-5 py-4 text-sm flex gap-3">
+                                <a href="{{ route('finances.edit', $record) }}" class="text-blue-600 hover:text-blue-800 font-medium">Edit</a>
+                                <form action="{{ route('finances.destroy', $record) }}" method="POST" onsubmit="return confirm('Delete this record?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="text-red-500 hover:text-red-700 font-medium">Delete</button>
+                                </form>
+                            </td>
+                            @endunless
+                        </tr>
+                        @empty
+                        <tr><td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">No financial records yet.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

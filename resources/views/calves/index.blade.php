@@ -27,7 +27,7 @@
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $calf->name }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $calf->cattle->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $calf->dob }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"> {{ $calf->dob ? $calf->dob->format('d M Y') : '—' }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $calf->weight_kg }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $calf->breed }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ ucfirst($calf->gender) }}</td>

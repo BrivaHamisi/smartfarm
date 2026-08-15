@@ -30,3 +30,14 @@ protected function schedule(Schedule $schedule) {
         }
     })->daily();
 }
+
+// app/Console/Kernel.php (or bootstrap/app.php in Laravel 11)
+
+// In Laravel 10 (Kernel.php):
+protected function schedule(Schedule $schedule): void
+{
+    $schedule->command('farm:send-reminders')->dailyAt('07:00');
+}
+
+// In Laravel 11 (routes/console.php):
+Schedule::command('farm:send-reminders')->dailyAt('07:00');

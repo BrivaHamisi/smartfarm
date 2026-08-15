@@ -1,4 +1,5 @@
 <?php
+// app/Http/Controllers/FinancesController.php
 
 namespace App\Http\Controllers;
 
@@ -7,28 +8,18 @@ use Illuminate\Http\Request;
 
 class FinancesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     public function finances()
     {
-        $financials = Finances::all();
+        $financials = Finances::all(); // user scoped via trait
         $totalIncome = $financials->where('type', 'income')->sum('amount');
         $totalExpenses = $financials->where('type', 'expense')->sum('amount');
         $netProfit = $totalIncome - $totalExpenses;
-        $todayExpenses = $financials->where('type', 'expense')->where('date', today())->sum('amount');
+        $todayExpenses = $financials->where('type', 'expense')
+            ->filter(fn($f) => $f->date->isToday())->sum('amount');
 
         return view('dashboard.finances', compact('financials', 'totalIncome', 'totalExpenses', 'netProfit', 'todayExpenses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('finances.create');
@@ -37,47 +28,43 @@ class FinancesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'type' => 'required|in:expense,income',
-            'amount' => 'required|numeric|min:0',
-            'category' => 'required|in:feeds,medication,human_resource,sales',
-            'date' => 'required|date',
+            'type'        => 'required|in:expense,income',
+            'amount'      => 'required|numeric|min:0',
+            'category'    => 'required|in:feeds,medication,human_resource,sales,dorper,crops,rabbits,other',
+            'date'        => 'required|date',
+            'description' => 'nullable|string|max:500',
+            'source'      => 'nullable|string|max:255', // e.g. "Dorper Lamb Sale"
         ]);
 
-        Finances::create($request->only(['type', 'amount', 'category', 'date']));
+        Finances::create($request->only(['type', 'amount', 'category', 'date', 'description', 'source']));
 
         return redirect()->route('finances.index')->with('success', 'Financial record added successfully!');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Finances $finances)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Finances $finances)
     {
-        //
+        return view('finances.edit', compact('finances'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Finances $finances)
     {
-        //
+        $request->validate([
+            'type'        => 'required|in:expense,income',
+            'amount'      => 'required|numeric|min:0',
+            'category'    => 'required|in:feeds,medication,human_resource,sales,dorper,crops,rabbits,other',
+            'date'        => 'required|date',
+            'description' => 'nullable|string|max:500',
+            'source'      => 'nullable|string|max:255',
+        ]);
+
+        $finances->update($request->only(['type', 'amount', 'category', 'date', 'description', 'source']));
+
+        return redirect()->route('finances.index')->with('success', 'Financial record updated successfully!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Finances $finances)
     {
-        //
+        $finances->delete();
+        return redirect()->route('finances.index')->with('success', 'Financial record deleted.');
     }
 }

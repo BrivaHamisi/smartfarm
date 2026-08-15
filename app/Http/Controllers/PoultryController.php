@@ -1,4 +1,5 @@
 <?php
+// app/Http/Controllers/PoultryController.php
 
 namespace App\Http\Controllers;
 
@@ -7,80 +8,57 @@ use Illuminate\Http\Request;
 
 class PoultryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     public function poultry()
     {
-        $poultry = Poultry::all();
-        $totalChickens = $poultry->last()->chicken_count ?? 0;
-        $eggsToday = $poultry->where('date', today())->sum('eggs_produced');
-        $eggsSold = $poultry->where('date', today())->sum('eggs_sold');
-        $mortalities = $poultry->where('date', today())->sum('mortalities');
+        $poultry = Poultry::latest('date')->get();
+        $totalChickens = $poultry->first()->chicken_count ?? 0;
+        $eggsToday = $poultry->filter(fn($p) => $p->date->isToday())->sum('eggs_produced');
+        $eggsSold = $poultry->filter(fn($p) => $p->date->isToday())->sum('eggs_sold');
+        $mortalities = $poultry->filter(fn($p) => $p->date->isToday())->sum('mortalities');
 
         return view('dashboard.poultry', compact('poultry', 'totalChickens', 'eggsToday', 'eggsSold', 'mortalities'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('poultry.create');
-    }
+    public function create() { return view('poultry.create'); }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
-            'date' => 'required|date',
+            'date'          => 'required|date',
             'chicken_count' => 'required|integer|min:0',
-            'mortalities' => 'required|integer|min:0',
+            'mortalities'   => 'required|integer|min:0',
             'eggs_produced' => 'required|integer|min:0',
-            'eggs_sold' => 'required|integer|min:0',
+            'eggs_sold'     => 'required|integer|min:0',
         ]);
 
-        Poultry::create($request->all());
+        Poultry::create($request->only(['date', 'chicken_count', 'mortalities', 'eggs_produced', 'eggs_sold']));
 
         return redirect()->route('poultry.index')->with('success', 'Poultry record added successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Poultry $poultry)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Poultry $poultry)
     {
-        //
+        return view('poultry.edit', compact('poultry'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Poultry $poultry)
     {
-        //
+        $request->validate([
+            'date'          => 'required|date',
+            'chicken_count' => 'required|integer|min:0',
+            'mortalities'   => 'required|integer|min:0',
+            'eggs_produced' => 'required|integer|min:0',
+            'eggs_sold'     => 'required|integer|min:0',
+        ]);
+
+        $poultry->update($request->only(['date', 'chicken_count', 'mortalities', 'eggs_produced', 'eggs_sold']));
+
+        return redirect()->route('poultry.index')->with('success', 'Poultry record updated!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Poultry $poultry)
     {
-        //
+        $poultry->delete();
+        return redirect()->route('poultry.index')->with('success', 'Poultry record deleted.');
     }
 }
