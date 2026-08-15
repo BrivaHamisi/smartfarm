@@ -7,8 +7,11 @@ use App\Filament\Shared\OwnerColumn;
 use App\Filament\Shared\OwnerField;
 use App\Filament\Shared\OwnerFilter;
 use App\Models\Finances;
+use App\Models\Invoice;
+use App\Services\InvoiceService;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -111,6 +114,38 @@ class FinancesResource extends Resource
                     }),
             ])
             ->actions([
+                Tables\Actions\Action::make('invoice')
+                    ->label('Generate invoice')
+                    ->icon('heroicon-o-document-text')
+                    ->color('primary')
+                    ->fillForm(fn (Finances $record): array => [
+                        'amount' => $record->amount,
+                        'date' => $record->date,
+                        'notes' => $record->description ?: $record->source,
+                    ])
+                    ->form([
+                        Forms\Components\TextInput::make('customer_name')->label('Customer / client')->maxLength(255)->required(),
+                        Forms\Components\TextInput::make('amount')->numeric()->minValue(0)->prefix('KSh ')->required(),
+                        Forms\Components\DatePicker::make('date')->required()->default(today()),
+                        Forms\Components\DatePicker::make('due_date'),
+                        Forms\Components\Select::make('status')
+                            ->options([
+                                Invoice::STATUS_DRAFT => 'Draft',
+                                Invoice::STATUS_SENT => 'Sent',
+                                Invoice::STATUS_PAID => 'Paid',
+                            ])
+                            ->default(Invoice::STATUS_DRAFT)
+                            ->native(false),
+                        Forms\Components\Textarea::make('notes')->rows(2)->maxLength(500),
+                    ])
+                    ->action(function (Finances $record, array $data): void {
+                        $invoice = InvoiceService::createFromFinance($record, $data);
+
+                        Notification::make()
+                            ->title('Invoice '.$invoice->invoice_number.' generated')
+                            ->success()
+                            ->send();
+                    }),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])

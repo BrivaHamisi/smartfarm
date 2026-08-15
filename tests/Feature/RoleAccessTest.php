@@ -55,6 +55,20 @@ class RoleAccessTest extends TestCase
         $this->actingAs($editor)->get('/dashboard/finances')->assertForbidden();
         $this->actingAs($editor)->get('/dashboard/workers')->assertForbidden();
         $this->actingAs($editor)->get('/dashboard/users')->assertForbidden();
+        $this->actingAs($editor)->get('/dashboard/finance')->assertForbidden();
+        $this->actingAs($editor)->get('/dashboard/reports')->assertForbidden();
+        $this->actingAs($editor)->get('/dashboard/invoices')->assertForbidden();
+        $this->actingAs($editor)->get('/dashboard/admin/console')->assertForbidden();
+    }
+
+    public function test_owner_can_access_finance_area_but_not_console(): void
+    {
+        $owner = $this->owner();
+
+        $this->actingAs($owner)->get('/dashboard/finance')->assertOk();
+        $this->actingAs($owner)->get('/dashboard/reports')->assertOk();
+        $this->actingAs($owner)->get('/dashboard/invoices')->assertOk();
+        $this->actingAs($owner)->get('/dashboard/admin/console')->assertForbidden();
     }
 
     public function test_owner_can_access_all_farm_resources(): void

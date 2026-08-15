@@ -1,0 +1,232 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-15T00:00:00Z",
+  "title": "Design System: SmartFarm",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Pasture Green",
+        "canonical": "#0d8a4e",
+        "tonalRamp": [
+          "oklch(16% 0.05 160)",
+          "oklch(24% 0.08 160)",
+          "oklch(33% 0.11 160)",
+          "oklch(43% 0.12 160)",
+          "oklch(54% 0.12 160)",
+          "oklch(68% 0.09 160)",
+          "oklch(80% 0.06 160)",
+          "oklch(93% 0.03 160)"
+        ]
+      },
+      "signal": {
+        "role": "secondary",
+        "displayName": "Signal Red",
+        "canonical": "#FF2D20",
+        "tonalRamp": [
+          "oklch(18% 0.06 25)",
+          "oklch(28% 0.12 25)",
+          "oklch(38% 0.18 25)",
+          "oklch(49% 0.21 25)",
+          "oklch(60% 0.21 25)",
+          "oklch(72% 0.15 25)",
+          "oklch(84% 0.08 25)",
+          "oklch(94% 0.03 25)"
+        ]
+      },
+      "success": {
+        "role": "tertiary",
+        "displayName": "Success",
+        "canonical": "#16a34a",
+        "tonalRamp": [
+          "oklch(16% 0.05 150)",
+          "oklch(25% 0.08 150)",
+          "oklch(34% 0.10 150)",
+          "oklch(45% 0.12 150)",
+          "oklch(56% 0.12 150)",
+          "oklch(69% 0.09 150)",
+          "oklch(81% 0.06 150)",
+          "oklch(93% 0.03 150)"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Danger",
+        "canonical": "#dc2626",
+        "tonalRamp": [
+          "oklch(18% 0.05 20)",
+          "oklch(27% 0.11 20)",
+          "oklch(36% 0.16 20)",
+          "oklch(46% 0.19 20)",
+          "oklch(56% 0.19 20)",
+          "oklch(70% 0.13 20)",
+          "oklch(83% 0.07 20)",
+          "oklch(94% 0.03 20)"
+        ]
+      },
+      "neutral-gray": {
+        "role": "neutral",
+        "displayName": "Neutral Gray",
+        "canonical": "#5b6472",
+        "tonalRamp": [
+          "oklch(18% 0.01 250)",
+          "oklch(26% 0.015 250)",
+          "oklch(35% 0.015 250)",
+          "oklch(45% 0.015 250)",
+          "oklch(55% 0.012 250)",
+          "oklch(67% 0.01 250)",
+          "oklch(80% 0.008 250)",
+          "oklch(93% 0.005 250)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Public hero and auth headline only." },
+      "headline": { "displayName": "Headline", "purpose": "Section and block headings." },
+      "title": { "displayName": "Title", "purpose": "Feature-card titles and the brand wordmark." },
+      "body": { "displayName": "Body", "purpose": "Page copy and descriptions, muted gray, max ~38rem." },
+      "label": { "displayName": "Label", "purpose": "Uppercase micro-labels on table headers and PDF documents." }
+    },
+    "shadows": [
+      { "name": "stat-card", "value": "0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12)", "purpose": "Dashboard stat overview cards." },
+      { "name": "section", "value": "0 1px 2px rgb(15 23 42 / 0.04), 0 12px 28px -16px rgb(15 23 42 / 0.10)", "purpose": "Dashboard content sections and tables." },
+      { "name": "form-card", "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)", "purpose": "The auth form card." },
+      { "name": "topbar", "value": "0 1px 0 0 rgb(0 0 0 / 0.04)", "purpose": "Dashboard top-bar hairline." }
+    ],
+    "motion": [
+      { "name": "ease-standard", "value": "cubic-bezier(0.4, 0, 0.2, 1)", "purpose": "Default easing for color and background transitions (150ms)." },
+      { "name": "hover-lift", "value": "translateY(-4px)", "purpose": "Public feature-card hover lift over a 150ms ease transition." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Signal Red CTA",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The public-surface primary action; appears once per screen.",
+      "html": "<button class=\"ds-btn-signal\">Get Started</button>",
+      "css": ".ds-btn-signal { background: #FF2D20; color: #fff; font: 500 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1); } .ds-btn-signal:hover { background: #e02717; } .ds-btn-signal:active { background: #c81f12; } .ds-btn-signal:focus-visible { outline: none; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #FF2D20; }"
+    },
+    {
+      "name": "Pasture Green Action",
+      "kind": "button",
+      "refersTo": "button-dashboard-primary",
+      "description": "The operational primary action inside the dashboard and on generated documents.",
+      "html": "<button class=\"ds-btn-primary\">Generate PDF</button>",
+      "css": ".ds-btn-primary { background: #0d8a4e; color: #fff; font: 500 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; padding: 8px 14px; border: none; border-radius: 8px; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1); } .ds-btn-primary:hover { background: #0a7240; } .ds-btn-primary:active { background: #085c34; } .ds-btn-primary:focus-visible { outline: none; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #0d8a4e; }"
+    },
+    {
+      "name": "Ghost / Outline Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "The quiet secondary action on public pages.",
+      "html": "<button class=\"ds-btn-secondary\">Watch Demo</button>",
+      "css": ".ds-btn-secondary { background: #fff; color: #111827; font: 500 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; padding: 12px 24px; border: 1px solid #e5e7eb; border-radius: 8px; cursor: pointer; transition: background 150ms cubic-bezier(0.4,0,0.2,1); } .ds-btn-secondary:hover { background: #f9fafb; } .ds-btn-secondary:focus-visible { outline: none; box-shadow: 0 0 0 2px #fff, 0 0 0 4px #FF2D20; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "The public auth field: white, hairline border, gentle 8px radius, Signal Red focus.",
+      "html": "<label class=\"ds-field-label\">Email</label><input class=\"ds-input\" type=\"email\" placeholder=\"you@example.com\">",
+      "css": ".ds-field-label { display: block; font: 500 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; color: #374151; margin-bottom: 6px; } .ds-input { width: 100%; box-sizing: border-box; padding: 12px 16px; font: 400 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; color: #111827; background: #fff; border: 1px solid #d1d5db; border-radius: 8px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: border-color 150ms cubic-bezier(0.4,0,0.2,1), box-shadow 150ms cubic-bezier(0.4,0,0.2,1); } .ds-input::placeholder { color: #9ca3af; } .ds-input:focus { outline: none; border-color: #FF2D20; box-shadow: 0 0 0 2px rgb(255 45 32 / 0.25); }"
+    },
+    {
+      "name": "Auth Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "The white form card that sits on the gray auth field.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-title\">Welcome Back</div><div class=\"ds-card-sub\">Sign in to your farm dashboard</div></div>",
+      "css": ".ds-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 32px; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); } .ds-card-title { font: 700 24px/1.2 'Figtree', ui-sans-serif, system-ui, sans-serif; color: #111827; } .ds-card-sub { font: 400 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; color: #6b7280; margin-top: 4px; }"
+    },
+    {
+      "name": "Sidebar Nav Item",
+      "kind": "nav",
+      "refersTo": "card-surface",
+      "description": "Dashboard sidebar items; the active item tints Pasture Green with a 3px inset bar.",
+      "html": "<nav class=\"ds-sidebar\"><a class=\"ds-sidebar-item\" href=\"#\">Cattle</a><a class=\"ds-sidebar-item ds-sidebar-item-active\" href=\"#\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 19V5M4 5l16-1v14\" opacity=\"0\"/><path d=\"M9 12h6M9 8h6M9 16h6\" opacity=\"0\"/><path d=\"M4 19a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h14\" /></svg>Finances</a></nav>",
+      "css": ".ds-sidebar { display: flex; flex-direction: column; gap: 4px; } .ds-sidebar-item { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 10px; font: 500 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; color: #4b5563; text-decoration: none; } .ds-sidebar-item svg { width: 16px; height: 16px; } .ds-sidebar-item-active { background: rgb(13 138 78 / 0.12); box-shadow: inset 3px 0 0 0 #0d8a4e; color: #0d5a34; } .ds-sidebar-item-active svg { color: #0d5a34; } .ds-sidebar-item:hover:not(.ds-sidebar-item-active) { background: rgb(0 0 0 / 0.04); } .ds-sidebar-item:focus-visible { outline: 2px solid #0d8a4e; outline-offset: 2px; }"
+    },
+    {
+      "name": "Stat Card",
+      "kind": "card",
+      "refersTo": "card-surface",
+      "description": "Dashboard stat overview tile: white, 12px radius, softly layered shadow, green money.",
+      "html": "<div class=\"ds-stat\"><div class=\"ds-stat-label\">Total income</div><div class=\"ds-stat-value\">KSh 1,284,500</div></div>",
+      "css": ".ds-stat { background: #fff; border: 1px solid rgb(15 23 42 / 0.06); border-radius: 12px; padding: 16px; box-shadow: 0 1px 2px rgb(15 23 42 / 0.04), 0 8px 24px -12px rgb(15 23 42 / 0.12); } .ds-stat-label { font: 500 11px/14px 'Figtree', ui-sans-serif, system-ui, sans-serif; text-transform: uppercase; letter-spacing: 0.05em; color: #6b7280; } .ds-stat-value { font: 700 22px/28px 'Figtree', ui-sans-serif, system-ui, sans-serif; color: #0d8a4e; margin-top: 6px; }"
+    },
+    {
+      "name": "PDF Brand Header",
+      "kind": "custom",
+      "refersTo": "card-surface",
+      "description": "The generated-document masthead: SF mark in Pasture Green beside the wordmark, reporting period right-aligned.",
+      "html": "<header class=\"ds-pdf-head\"><span class=\"ds-pdf-mark\">SF</span><div><div class=\"ds-pdf-name\">SmartFarm</div><div class=\"ds-pdf-meta\">Smart agriculture management</div></div><div class=\"ds-pdf-period\"><div class=\"ds-pdf-label\">Reporting period</div><div>01 Jan 2026 — 31 Jan 2026</div></div></header>",
+      "css": ".ds-pdf-head { display: flex; align-items: center; gap: 8px; justify-content: space-between; font-family: 'DejaVu Sans', sans-serif; font-size: 11px; color: #1f2937; } .ds-pdf-mark { width: 34px; height: 34px; border-radius: 8px; background: #0d8a4e; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; } .ds-pdf-name { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; } .ds-pdf-meta { color: #6b7280; } .ds-pdf-period { text-align: right; } .ds-pdf-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #9ca3af; margin-bottom: 3px; }"
+    },
+    {
+      "name": "Data Table Header Row",
+      "kind": "custom",
+      "refersTo": "card-surface",
+      "description": "The data-surface table header: uppercase micro-labels over a 2px border, no color fill.",
+      "html": "<table class=\"ds-table\"><thead><tr><th>Date</th><th>Type</th><th style=\"text-align:right\">Amount</th></tr></thead><tbody><tr><td>12 Aug 2026</td><td>Income</td><td style=\"text-align:right\">+ KSh 45,000</td></tr></tbody></table>",
+      "css": ".ds-table { width: 100%; border-collapse: collapse; font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif; font-size: 14px; } .ds-table th { text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #475569; padding: 8px; border-bottom: 2px solid #e5e7eb; } .ds-table td { padding: 8px; border-bottom: 1px solid #f3f4f6; color: #374151; }"
+    },
+    {
+      "name": "Money Cell",
+      "kind": "custom",
+      "refersTo": "card-surface",
+      "description": "The signature money grammar: green positive, red negative, signed and KSh-prefixed.",
+      "html": "<span class=\"ds-money ds-money-pos\">+ KSh 45,000</span> <span class=\"ds-money ds-money-neg\">− KSh 12,300</span>",
+      "css": ".ds-money { font: 600 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; } .ds-money-pos { color: #16a34a; } .ds-money-neg { color: #dc2626; }"
+    },
+    {
+      "name": "Public Pill",
+      "kind": "chip",
+      "refersTo": "chip-pill",
+      "description": "Translucent Signal Red pill used for kicker copy on public pages.",
+      "html": "<span class=\"ds-pill\"><svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 5l7 7-7 7\"/></svg>Smart Agriculture Platform</span>",
+      "css": ".ds-pill { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 9999px; background: rgb(255 45 32 / 0.10); color: #111827; font: 500 14px/20px 'Figtree', ui-sans-serif, system-ui, sans-serif; } .ds-pill svg { width: 16px; height: 16px; color: #FF2D20; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Farmhand's Toolkit",
+    "overview": "SmartFarm is a two-surface system: a vivid public world that recruits, and a calm operational world that runs the farm. The public surface is bright, energetic agri-tech — Signal Red action against light-gray whitespace, bold confident copy, and feature cards that feel modern and approachable. The operational surface — the Filament dashboard and generated PDF documents — is serene and precise: Pasture Green primary actions, quiet grays, and money that is always legible at a glance.\n\nThe personality is fresh, modern, and lean: generous whitespace, rounded corners, and a single modern grotesque typeface (Figtree) that carries the whole system without a display contrast pairing. Components are refined and restrained — hairline borders, soft layered shadows, and quiet neutrals — so that only genuine primary actions ever wear brand color. The two accents never compete: Signal Red is locked to public/auth screens, Pasture Green to operations. The shift from red to green is the product story: *we get your attention; then we give you order.*",
+    "keyCharacteristics": [
+      "Two-surface color contract: Signal Red for public persuasion, Pasture Green for operations and money.",
+      "Fresh agri-tech atmosphere: bright accents, generous whitespace, rounded corners, approachable copy.",
+      "Refined and restrained components: hairline borders, soft layered shadows, quiet grays.",
+      "Money is always green ink (income, net positive) or red ink (expenses, losses), prefixed \"KSh\".",
+      "Micro-labels are uppercase with wide tracking on table headers and PDF documents.",
+      "Figtree alone; no display-contrast type pairing."
+    ],
+    "rules": [
+      { "name": "The Two-Surface Rule", "body": "Signal Red and Pasture Green are surface-locked. Public/auth screens lead with red on light gray; the dashboard and PDFs lead with green. Never blend both brand accents on one screen.", "section": "colors" },
+      { "name": "The Green-Ink Rule", "body": "Positive money (income, net income, yields) is Pasture Green; negative money (expenses, losses) is danger #dc2626. Currency is always \"KSh\".", "section": "colors" },
+      { "name": "The Quiet-Neutral Rule", "body": "Neutrals stay in the gray-50→gray-900 / slate family. Muted text is #6b7280; secondary actions are white with a gray-200 border. A screen's calm is the point.", "section": "colors" },
+      { "name": "The Uppercase Micro-Label Rule", "body": "Column headers, PDF field labels, and kickers are uppercase, 0.72rem (PDF 9px), weight 500–600, letter-spacing 0.05em or wider. Never apply this treatment to body copy.", "section": "typography" },
+      { "name": "The Flat-By-Default Rule", "body": "Shadows only separate top-level surfaces (stat cards, sections, forms). In dark mode shadows are dropped and surfaces separate by borders alone. Never stack heavy or colored shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep public pages on the light-gray ground with Signal Red as the only brand accent.",
+      "Do use Pasture Green for every dashboard primary action, active nav state, and positive money figure.",
+      "Do lead tables and PDF labels with uppercase micro-labels (0.72rem, 0.05em+ tracking).",
+      "Do apply the softly layered shadow set verbatim (stat-card / section / form-card values).",
+      "Do reference the frontmatter tokens when adding a color, radius, or padding to new screens."
+    ],
+    "donts": [
+      "Don't mix Signal Red and Pasture Green on the same screen.",
+      "Don't add new brand accents or gradient fills (the auth hero overlay is the single exception).",
+      "Don't stack heavy or colored shadows; in dark mode drop shadows entirely and separate by borders.",
+      "Don't draw money in any color other than Pasture Green (positive) or #dc2626 (negative).",
+      "Don't introduce a display-contrast type pairing; Figtree alone is the stack.",
+      "Don't add emojis to the UI or to generated documents."
+    ]
+  }
+}

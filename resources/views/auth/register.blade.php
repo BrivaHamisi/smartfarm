@@ -59,21 +59,26 @@
         </div>
 
         <!-- Form Section -->
-        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 px-8 lg:px-12 flex flex-col justify-center py-12">
+        <div class="w-full lg:w-1/2 bg-gradient-to-br from-gray-50 to-gray-100 px-4 sm:px-8 lg:px-12 flex flex-col justify-center py-12">
             <div class="w-full max-w-md mx-auto">
                 <!-- Logo and Title -->
                 <div class="flex items-center justify-start space-x-3 mb-8">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-[#FF2D20]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                    <span class="text-xl font-bold text-gray-800">Create Account</span>
+                    <div class="flex items-center justify-center h-11 w-11 rounded-xl bg-[#FF2D20]/10 ring-1 ring-[#FF2D20]/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-[#FF2D20]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-gray-900">Create Account</h2>
+                        <p class="text-sm text-gray-500">Join Smart Farm and start managing your farm</p>
+                    </div>
                 </div>
 
-                <form method="POST" action="{{ route('register') }}" class="space-y-6">
+                <form id="auth-form" method="POST" action="{{ route('register') }}" class="space-y-6 bg-white rounded-2xl shadow-sm ring-1 ring-gray-200 p-6 sm:p-8" novalidate>
                     @csrf
 
                     <!-- Name -->
-                    <div class="space-y-1">
+                    <div class="space-y-1.5">
                         <label for="name" class="block text-sm font-medium text-gray-700">
                             {{ __('Name') }}
                         </label>
@@ -81,20 +86,23 @@
                             id="name" 
                             type="text" 
                             name="name" 
-                            :value="old('name')" 
+                            value="{{ old('name') }}" 
                             required 
                             autofocus 
                             autocomplete="name"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
-                                @error('name') border-red-500 @enderror"
+                            placeholder="e.g. Jane Mwangi"
+                            @error('name') aria-invalid="true" aria-describedby="name-error" @enderror
+                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 transition duration-150 ease-in-out
+                                focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
+                                @error('name') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 @else border-gray-300 @enderror"
                         >
                         @error('name')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p id="name-error" role="alert" class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Email Address -->
-                    <div class="space-y-1">
+                    <div class="space-y-1.5">
                         <label for="email" class="block text-sm font-medium text-gray-700">
                             {{ __('Email') }}
                         </label>
@@ -102,19 +110,22 @@
                             id="email" 
                             type="email" 
                             name="email" 
-                            :value="old('email')" 
+                            value="{{ old('email') }}" 
                             required 
                             autocomplete="username"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
-                                @error('email') border-red-500 @enderror"
+                            placeholder="you@example.com"
+                            @error('email') aria-invalid="true" aria-describedby="email-error" @enderror
+                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 transition duration-150 ease-in-out
+                                focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
+                                @error('email') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 @else border-gray-300 @enderror"
                         >
                         @error('email')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p id="email-error" role="alert" class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Password -->
-                    <div class="space-y-1">
+                    <div class="space-y-1.5">
                         <label for="password" class="block text-sm font-medium text-gray-700">
                             {{ __('Password') }}
                         </label>
@@ -124,16 +135,20 @@
                             name="password" 
                             required 
                             autocomplete="new-password"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out
-                                @error('password') border-red-500 @enderror"
+                            minlength="8"
+                            placeholder="At least 8 characters"
+                            @error('password') aria-invalid="true" aria-describedby="password-error" @enderror
+                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 transition duration-150 ease-in-out
+                                focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
+                                @error('password') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 @else border-gray-300 @enderror"
                         >
                         @error('password')
-                            <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                            <p id="password-error" role="alert" class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <!-- Confirm Password -->
-                    <div class="space-y-1">
+                    <div class="space-y-1.5">
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700">
                             {{ __('Confirm Password') }}
                         </label>
@@ -143,24 +158,46 @@
                             name="password_confirmation" 
                             required 
                             autocomplete="new-password"
-                            class="block w-full px-4 py-3 rounded-lg border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring focus:ring-[#FF2D20]/20 focus:ring-opacity-50 transition duration-150 ease-in-out"
+                            minlength="8"
+                            placeholder="Re-enter your password"
+                            @error('password_confirmation') aria-invalid="true" aria-describedby="password_confirmation-error" @enderror
+                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 transition duration-150 ease-in-out
+                                focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
+                                @error('password_confirmation') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 @else border-gray-300 @enderror"
                         >
+                        @error('password_confirmation')
+                            <p id="password_confirmation-error" role="alert" class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
+                        @enderror
                     </div>
 
-                    <div class="flex items-center justify-between pt-4">
-                        <a href="{{ route('login') }}" class="text-sm text-[#FF2D20] hover:text-[#e02717] transition-colors duration-150">
+                    <div class="flex items-center justify-between pt-2">
+                        <a href="{{ route('login') }}" class="text-sm font-medium text-[#FF2D20] hover:text-[#e02717] transition-colors duration-150">
                             {{ __('Already registered?') }}
                         </a>
 
                         <button 
+                            id="submit-button"
                             type="submit" 
-                            class="flex justify-center py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-[#FF2D20] hover:bg-[#e02717] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] transition-all duration-150 ease-in-out"
+                            class="inline-flex items-center justify-center gap-2 py-3 px-6 border border-transparent rounded-lg shadow-sm text-sm font-semibold text-white bg-[#FF2D20] hover:bg-[#e02717] active:bg-[#c81f12] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FF2D20] transition-all duration-150 ease-in-out disabled:opacity-70 disabled:cursor-not-allowed"
                         >
-                            {{ __('Register') }}
+                            <span id="submit-label">{{ __('Register') }}</span>
                         </button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('auth-form')?.addEventListener('submit', function () {
+            const button = document.getElementById('submit-button');
+            const label = document.getElementById('submit-label');
+            if (!button || button.disabled) return;
+            button.disabled = true;
+            label.textContent = 'Creating account…';
+            const spinner = document.createElement('span');
+            spinner.className = 'inline-block h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin';
+            button.prepend(spinner);
+        });
+    </script>
 </x-layout>
