@@ -109,7 +109,7 @@ class FarmReportService
 
         return Pdf::loadView('pdf.farm-report', ['report' => $report])
             ->setPaper('a4')
-            ->stream('farm-report-'.($report['farm']?->id ?? $farmId).'-'.Carbon::parse($from)->format('Y-m-d').'.pdf');
+            ->download('farm-report-'.($report['farm']?->id ?? $farmId).'-'.Carbon::parse($from)->format('Y-m-d').'.pdf');
     }
 
     protected static function count(string $model, string $column, int $farmId, Carbon $from, Carbon $to): int

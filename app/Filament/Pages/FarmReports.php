@@ -5,14 +5,12 @@ namespace App\Filament\Pages;
 use App\Filament\Widgets\FarmReportSummary;
 use App\Filament\Widgets\FarmReportTransactions;
 use App\Models\User;
-use App\Services\FarmReportService;
 use App\Support\PeriodFilter;
 use Filament\Actions\Action;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
 use Filament\Pages\Dashboard as BaseDashboard;
 use Filament\Pages\Dashboard\Concerns\HasFiltersForm;
 
@@ -65,25 +63,25 @@ class FarmReports extends BaseDashboard
             Action::make('download_pdf')
                 ->label('Generate PDF')
                 ->icon('heroicon-o-arrow-down-tray')
-                ->action(function (): mixed {
+                ->url(function (): ?string {
                     $user = auth()->user();
                     $farmId = $user?->isAdmin()
                         ? (int) ($this->filters['farm_id'] ?? 0)
                         : (int) ($user?->farmId() ?? 0);
 
                     if (! $farmId) {
-                        Notification::make()
-                            ->title('Select a farm to generate a report')
-                            ->warning()
-                            ->send();
-
                         return null;
                     }
 
                     [$from, $until] = PeriodFilter::resolve($this->filters);
 
-                    return FarmReportService::download($farmId, $from, $until);
-                }),
+                    return route('pdf.farm-report', [
+                        'farm_id' => $farmId,
+                        'from' => $from->toDateString(),
+                        'until' => $until->toDateString(),
+                    ]);
+                })
+                ->openUrlInNewTab(),
         ];
     }
 

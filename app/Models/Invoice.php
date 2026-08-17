@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Services\InvoiceService;
 use App\Traits\BelongsToUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Invoice extends Model
 {
@@ -35,6 +37,17 @@ class Invoice extends Model
         'due_date' => 'date',
         'amount' => 'decimal:2',
     ];
+
+    protected static function booted(): void
+    {
+        static::creating(function (Invoice $invoice) {
+            if (empty($invoice->invoice_number)) {
+                $invoice->invoice_number = InvoiceService::generateNumber(
+                    Carbon::parse($invoice->date ?? today())->year
+                );
+            }
+        });
+    }
 
     public function finance()
     {

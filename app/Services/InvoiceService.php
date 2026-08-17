@@ -72,6 +72,6 @@ class InvoiceService
         $invoice->loadMissing(['user', 'finance', 'creator']);
 
         return Pdf::loadView('pdf.invoice', ['invoice' => $invoice])
-            ->stream($invoice->invoice_number.'.pdf');
+            ->download($invoice->invoice_number.'.pdf');
     }
 }

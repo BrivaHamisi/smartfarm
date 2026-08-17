@@ -8,7 +8,6 @@ use App\Filament\Shared\OwnerField;
 use App\Filament\Shared\OwnerFilter;
 use App\Models\Finances;
 use App\Models\Invoice;
-use App\Services\InvoiceService;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
@@ -40,9 +39,8 @@ class InvoiceResource extends Resource
         return $form
             ->schema([
                 OwnerField::make(),
-                Forms\Components\TextInput::make('invoice_number')->disabled()->dehydrated(),
                 Forms\Components\Select::make('finance_id')
-                    ->label('Source transaction')
+                    ->label('Linked transaction')
                     ->options(fn (): array => Finances::query()
                         ->orderByDesc('date')
                         ->get()
@@ -116,7 +114,8 @@ class InvoiceResource extends Resource
                 Tables\Actions\Action::make('pdf')
                     ->label('PDF')
                     ->icon('heroicon-o-arrow-down-tray')
-                    ->action(fn (Invoice $record): mixed => InvoiceService::download($record)),
+                    ->url(fn (Invoice $record): string => route('pdf.invoice', $record))
+                    ->openUrlInNewTab(),
                 Tables\Actions\Action::make('mark_paid')
                     ->label('Mark paid')
                     ->icon('heroicon-o-check-circle')
