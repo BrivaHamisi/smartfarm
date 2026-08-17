@@ -11,6 +11,7 @@ use Filament\Tables;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class UserResource extends Resource
 {
@@ -131,7 +132,7 @@ class UserResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                    ->using(function (array $data, \Illuminate\Database\Eloquent\Model $record): Model {
+                    ->using(function (array $data, Model $record): Model {
                         $record->update(static::normalizeManagedData($data));
 
                         return $record;
