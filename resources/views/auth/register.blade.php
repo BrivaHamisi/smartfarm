@@ -134,19 +134,31 @@
                         <label for="password" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                             {{ __('Password') }}
                         </label>
-                        <input 
-                            id="password" 
-                            type="password" 
-                            name="password" 
-                            required 
-                            autocomplete="new-password"
-                            minlength="8"
-                            placeholder="At least 8 characters"
-                            @error('password') aria-invalid="true" aria-describedby="password-error" @enderror
-                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 dark:text-white dark:placeholder-zinc-500 transition duration-150 ease-in-out
-                                focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
-                                @error('password') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 dark:border-red-500 dark:bg-red-950/40 @else border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 @enderror"
-                        >
+                        <div class="relative">
+                            <input 
+                                id="password" 
+                                type="password" 
+                                name="password" 
+                                required 
+                                autocomplete="new-password"
+                                minlength="8"
+                                placeholder="At least 8 characters"
+                                @error('password') aria-invalid="true" aria-describedby="password-error" @enderror
+                                class="block w-full px-4 pr-12 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 dark:text-white dark:placeholder-zinc-500 transition duration-150 ease-in-out
+                                    focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
+                                    @error('password') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 dark:border-red-500 dark:bg-red-950/40 @else border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 @enderror"
+                            >
+                            <button type="button" id="toggle-password" aria-label="Show password" aria-pressed="false"
+                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:text-zinc-500 dark:hover:text-zinc-300 transition-colors duration-150 focus:outline-none">
+                                <svg id="eye-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg id="eye-closed" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                                </svg>
+                            </button>
+                        </div>
                         @error('password')
                             <p id="password-error" role="alert" class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
@@ -157,19 +169,31 @@
                         <label for="password_confirmation" class="block text-sm font-medium text-gray-700 dark:text-zinc-300">
                             {{ __('Confirm Password') }}
                         </label>
-                        <input 
-                            id="password_confirmation" 
-                            type="password" 
-                            name="password_confirmation" 
-                            required 
-                            autocomplete="new-password"
-                            minlength="8"
-                            placeholder="Re-enter your password"
-                            @error('password_confirmation') aria-invalid="true" aria-describedby="password_confirmation-error" @enderror
-                            class="block w-full px-4 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 dark:text-white dark:placeholder-zinc-500 transition duration-150 ease-in-out
-                                focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
-                                @error('password_confirmation') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 dark:border-red-500 dark:bg-red-950/40 @else border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 @enderror"
-                        >
+                        <div class="relative">
+                            <input 
+                                id="password_confirmation" 
+                                type="password" 
+                                name="password_confirmation" 
+                                required 
+                                autocomplete="new-password"
+                                minlength="8"
+                                placeholder="Re-enter your password"
+                                @error('password_confirmation') aria-invalid="true" aria-describedby="password_confirmation-error" @enderror
+                                class="block w-full px-4 pr-12 py-3 rounded-lg border shadow-sm text-gray-900 placeholder-gray-400 dark:text-white dark:placeholder-zinc-500 transition duration-150 ease-in-out
+                                    focus:outline-none focus:ring-2 focus:ring-[#FF2D20]/25 focus:border-[#FF2D20]
+                                    @error('password_confirmation') border-red-400 bg-red-50 focus:border-red-500 focus:ring-red-200 dark:border-red-500 dark:bg-red-950/40 @else border-gray-300 dark:border-zinc-600 dark:bg-zinc-800 @enderror"
+                            >
+                            <button type="button" id="toggle-password-confirmation" aria-label="Show password" aria-pressed="false"
+                                class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600 dark:text-zinc-500 dark:hover:text-zinc-300 transition-colors duration-150 focus:outline-none">
+                                <svg id="eye-open-confirmation" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <svg id="eye-closed-confirmation" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                                </svg>
+                            </button>
+                        </div>
                         @error('password_confirmation')
                             <p id="password_confirmation-error" role="alert" class="mt-1.5 text-sm text-red-600 dark:text-red-400">{{ $message }}</p>
                         @enderror
@@ -194,6 +218,25 @@
     </div>
 
     <script>
+        function setupPasswordToggle(inputId, buttonId, openId, closedId) {
+            const input = document.getElementById(inputId);
+            const button = document.getElementById(buttonId);
+            const open = document.getElementById(openId);
+            const closed = document.getElementById(closedId);
+            button?.addEventListener('click', function () {
+                const showing = input.type === 'text';
+                input.type = showing ? 'password' : 'text';
+                button.setAttribute('aria-pressed', showing ? 'false' : 'true');
+                button.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+                open?.classList.toggle('hidden', !showing);
+                closed?.classList.toggle('hidden', showing);
+                input.focus();
+            });
+        }
+
+        setupPasswordToggle('password', 'toggle-password', 'eye-open', 'eye-closed');
+        setupPasswordToggle('password_confirmation', 'toggle-password-confirmation', 'eye-open-confirmation', 'eye-closed-confirmation');
+
         document.getElementById('auth-form')?.addEventListener('submit', function () {
             const button = document.getElementById('submit-button');
             const label = document.getElementById('submit-label');
