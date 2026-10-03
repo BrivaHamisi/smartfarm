@@ -34,5 +34,10 @@ jobs:
           ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke <<'REMOTE'
           cd /home3/brivacok/smartfarm.briva.co.ke || exit 1
           /opt/cpanel/ea-php84/root/usr/bin/php artisan tinker --execute='echo "session_driver=".config("session.driver").PHP_EOL; echo "sessions_table=".(DB::connection()->getSchemaBuilder()->hasTable("sessions") ? "yes" : "no").PHP_EOL;'
-          grep -h 'production.ERROR:' storage/logs/laravel*.log 2>/dev/null | tail -n 1 | /opt/cpanel/ea-php84/root/usr/bin/php -r '$line=stream_get_contents(STDIN); if (preg_match("/SQLSTATE\\[([^]]+)\\]/", $line, $match)) echo "latest_sqlstate=".$match[1].PHP_EOL; if (preg_match("/Table '\''([^'\'']+)'\'' doesn't exist/", $line, $match)) echo "missing_table=".$match[1].PHP_EOL; if ($line === "") echo "no_production_error_line_found".PHP_EOL;'
+          error_line=$(grep -h 'production.ERROR:' storage/logs/laravel*.log 2>/dev/null | tail -n 1)
+          if [ -z "$error_line" ]; then
+            echo 'no_production_error_line_found'
+          else
+            printf '%s\n' "$error_line" | grep -oE "SQLSTATE\\[[^]]+\\]|Table [^[:space:]]+ doesn.t exist" || true
+          fi
           REMOTE
