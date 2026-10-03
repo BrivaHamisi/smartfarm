@@ -44,11 +44,14 @@ jobs:
       - name: Configure SSH
         env:
           CPANEL_SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+          CPANEL_SSH_PASSPHRASE: ${{ secrets.CPANEL_SSH_PASSPHRASE }}
         run: |
           test -n "$CPANEL_SSH_KEY"
+          test -n "$CPANEL_SSH_PASSPHRASE"
           install -d -m 700 ~/.ssh
           printf '%s\n' "$CPANEL_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
+          ssh-keygen -q -p -P "$CPANEL_SSH_PASSPHRASE" -N '' -f ~/.ssh/id_ed25519 >/dev/null
           printf '%s\n' '[briva.co.ke]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
