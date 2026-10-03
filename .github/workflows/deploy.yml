@@ -67,9 +67,19 @@ jobs:
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
 
-      - name: Verify cPanel PHP runtime
+      - name: Select compatible cPanel PHP CLI
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke 'php -r "echo PHP_VERSION, PHP_EOL; exit(PHP_VERSION_ID < 80300);"'
+          php_binary=$(ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke 'for php in /opt/cpanel/ea-php*/root/usr/bin/php; do
+            [ -x "$php" ] || continue
+            version=$("$php" -r "echo PHP_VERSION_ID;")
+            if [ "$version" -ge 80300 ]; then printf "%s\n" "$php"; fi
+          done' | sort -V | tail -n 1)
+          if [[ -z "$php_binary" ]]; then
+            echo '::error::No cPanel PHP CLI version 8.3 or newer is installed.'
+            exit 1
+          fi
+          echo "CPANEL_PHP_BIN=$php_binary" >> "$GITHUB_ENV"
+          printf 'Using cPanel PHP CLI: %s\n' "$php_binary"
 
       - name: Upload application
         run: |
@@ -84,7 +94,7 @@ jobs:
             'mkdir -p /home3/brivacok/smartfarm.briva.co.ke && tar -xzf - -C /home3/brivacok/smartfarm.briva.co.ke'
 
       - name: Run Laravel deployment tasks
-        run: >-
-          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes
-          brivacok@briva.co.ke
-          'cd /home3/brivacok/smartfarm.briva.co.ke && php artisan optimize:clear && php artisan migrate --force && php artisan config:cache && php artisan view:cache'
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes \
+            brivacok@briva.co.ke \
+            "cd /home3/brivacok/smartfarm.briva.co.ke && $CPANEL_PHP_BIN artisan optimize:clear && $CPANEL_PHP_BIN artisan migrate --force && $CPANEL_PHP_BIN artisan config:cache && $CPANEL_PHP_BIN artisan view:cache"
