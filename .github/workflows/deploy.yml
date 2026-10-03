@@ -1,0 +1,70 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: smartfarm-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Build frontend assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          tools: composer:v2
+
+      - name: Install production dependencies
+        run: composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+
+      - name: Configure SSH
+        env:
+          CPANEL_SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+        run: |
+          test -n "$CPANEL_SSH_KEY"
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$CPANEL_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' '[briva.co.ke]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Upload application
+        run: |
+          rsync -az --delete \
+            --exclude='/.env' \
+            --exclude='/storage/' \
+            --exclude='/public/storage' \
+            --exclude='/.git/' \
+            --exclude='/node_modules/' \
+            -e 'ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes' \
+            ./ brivacok@briva.co.ke:/home3/brivacok/smartfarm.briva.co.ke/
+
+      - name: Run Laravel deployment tasks
+        run: >-
+          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes
+          brivacok@briva.co.ke
+          'cd /home3/brivacok/smartfarm.briva.co.ke && php artisan optimize:clear && php artisan migrate --force && php artisan config:cache && php artisan view:cache'
