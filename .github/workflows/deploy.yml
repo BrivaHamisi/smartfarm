@@ -35,7 +35,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.4'
           tools: composer:v2
 
       - name: Install production dependencies
@@ -51,6 +51,10 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           printf '%s\n' '[briva.co.ke]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
+
+      - name: Verify cPanel PHP runtime
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke 'php -r "echo PHP_VERSION, PHP_EOL; exit(PHP_VERSION_ID < 80300);"'
 
       - name: Upload application
         run: |
