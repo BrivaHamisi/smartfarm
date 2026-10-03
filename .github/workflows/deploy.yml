@@ -93,6 +93,11 @@ jobs:
           | ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke \
             'mkdir -p /home3/brivacok/smartfarm.briva.co.ke && tar -xzf - -C /home3/brivacok/smartfarm.briva.co.ke'
 
+      - name: Prepare Laravel runtime directories
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke \
+            'cd /home3/brivacok/smartfarm.briva.co.ke && mkdir -p bootstrap/cache storage/app/private storage/app/public storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs'
+
       - name: Run Laravel deployment tasks
         run: |
           ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes \
