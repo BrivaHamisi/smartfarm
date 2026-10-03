@@ -73,14 +73,15 @@ jobs:
 
       - name: Upload application
         run: |
-          rsync -az --delete \
-            --exclude='/.env' \
-            --exclude='/storage/' \
-            --exclude='/public/storage' \
-            --exclude='/.git/' \
-            --exclude='/node_modules/' \
-            -e 'ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes' \
-            ./ brivacok@briva.co.ke:/home3/brivacok/smartfarm.briva.co.ke/
+          tar -czf - \
+            --exclude='./.env' \
+            --exclude='./storage' \
+            --exclude='./public/storage' \
+            --exclude='./.git' \
+            --exclude='./node_modules' \
+            . \
+          | ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke \
+            'mkdir -p /home3/brivacok/smartfarm.briva.co.ke && tar -xzf - -C /home3/brivacok/smartfarm.briva.co.ke'
 
       - name: Run Laravel deployment tasks
         run: >-
