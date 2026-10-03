@@ -1,0 +1,38 @@
+name: Diagnose production login
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Configure SSH
+        env:
+          CPANEL_SSH_KEY: ${{ secrets.CPANEL_SSH_KEY }}
+          CPANEL_SSH_PASSPHRASE: ${{ secrets.CPANEL_SSH_PASSPHRASE }}
+        run: |
+          test -n "$CPANEL_SSH_KEY"
+          test -n "$CPANEL_SSH_PASSPHRASE"
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$CPANEL_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keygen -q -p -P "$CPANEL_SSH_PASSPHRASE" -N '' -f ~/.ssh/id_ed25519 >/dev/null
+          printf '%s\n' '[briva.co.ke]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Probe live login
+        run: |
+          curl -sS --max-time 20 -o /dev/null -w 'login_http_status=%{http_code}\n' https://smartfarm.briva.co.ke/login
+
+      - name: Inspect cPanel configuration and latest error
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke <<'REMOTE'
+          cd /home3/brivacok/smartfarm.briva.co.ke || exit 1
+          /opt/cpanel/ea-php84/root/usr/bin/php artisan tinker --execute='echo "session_driver=".config("session.driver").PHP_EOL; echo "sessions_table=".(DB::connection()->getSchemaBuilder()->hasTable("sessions") ? "yes" : "no").PHP_EOL;'
+          grep -h 'production.ERROR:' storage/logs/laravel*.log 2>/dev/null | tail -n 1 | /opt/cpanel/ea-php84/root/usr/bin/php -r '$line=stream_get_contents(STDIN); if (preg_match("/SQLSTATE\\[([^]]+)\\]/", $line, $match)) echo "latest_sqlstate=".$match[1].PHP_EOL; if (preg_match("/Table '\''([^'\'']+)'\'' doesn't exist/", $line, $match)) echo "missing_table=".$match[1].PHP_EOL; if ($line === "") echo "no_production_error_line_found".PHP_EOL;'
+          REMOTE
