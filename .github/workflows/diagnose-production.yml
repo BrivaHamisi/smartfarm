@@ -22,7 +22,7 @@ jobs:
           printf '%s\n' "$CPANEL_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keygen -q -p -P "$CPANEL_SSH_PASSPHRASE" -N '' -f ~/.ssh/id_ed25519 >/dev/null
-          printf '%s\n' '[briva.co.ke]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
+          printf '%s\n' '[64.204.254.66]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
       - name: Probe live login
@@ -31,7 +31,7 @@ jobs:
 
       - name: Inspect cPanel configuration and latest error
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke <<'REMOTE'
+          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@64.204.254.66 <<'REMOTE'
           cd /home3/brivacok/smartfarm.briva.co.ke || exit 1
           /opt/cpanel/ea-php84/root/usr/bin/php artisan tinker --execute='echo "session_driver=".config("session.driver").PHP_EOL; echo "sessions_table=".(DB::connection()->getSchemaBuilder()->hasTable("sessions") ? "yes" : "no").PHP_EOL;'
           error_line=$(grep -h 'production.ERROR:' storage/logs/laravel*.log 2>/dev/null | tail -n 1)

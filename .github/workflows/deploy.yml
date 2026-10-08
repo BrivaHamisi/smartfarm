@@ -52,7 +52,8 @@ jobs:
           printf '%s\n' "$CPANEL_SSH_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keygen -q -p -P "$CPANEL_SSH_PASSPHRASE" -N '' -f ~/.ssh/id_ed25519 >/dev/null
-          printf '%s\n' '[briva.co.ke]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
+          # Connect to the origin IP: briva.co.ke is behind the Cloudflare proxy, which does not forward SSH.
+          printf '%s\n' '[64.204.254.66]:1980 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAPzqd63LQYEk9Oyz4o2SFGMG+F75tgSGnJrs24EZjDq' > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/known_hosts
 
       - name: Show matching public key for cPanel
@@ -69,7 +70,7 @@ jobs:
 
       - name: Select compatible cPanel PHP CLI
         run: |
-          php_binary=$(ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke 'for php in /opt/cpanel/ea-php*/root/usr/bin/php; do
+          php_binary=$(ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@64.204.254.66 'for php in /opt/cpanel/ea-php*/root/usr/bin/php; do
             [ -x "$php" ] || continue
             version=$("$php" -r "echo PHP_VERSION_ID;")
             if [ "$version" -ge 80300 ]; then printf "%s\n" "$php"; fi
@@ -90,16 +91,16 @@ jobs:
             --exclude='./.git' \
             --exclude='./node_modules' \
             . \
-          | ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke \
+          | ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@64.204.254.66 \
             'mkdir -p /home3/brivacok/smartfarm.briva.co.ke && tar -xzf - -C /home3/brivacok/smartfarm.briva.co.ke'
 
       - name: Prepare Laravel runtime directories
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@briva.co.ke \
+          ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes brivacok@64.204.254.66 \
             'cd /home3/brivacok/smartfarm.briva.co.ke && mkdir -p bootstrap/cache storage/app/private storage/app/public storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs'
 
       - name: Run Laravel deployment tasks
         run: |
           ssh -i ~/.ssh/id_ed25519 -p 1980 -o BatchMode=yes \
-            brivacok@briva.co.ke \
+            brivacok@64.204.254.66 \
             "cd /home3/brivacok/smartfarm.briva.co.ke && $CPANEL_PHP_BIN artisan optimize:clear && $CPANEL_PHP_BIN artisan migrate --force && $CPANEL_PHP_BIN artisan config:cache && $CPANEL_PHP_BIN artisan view:cache"
