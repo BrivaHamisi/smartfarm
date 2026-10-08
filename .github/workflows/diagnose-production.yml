@@ -40,4 +40,14 @@ jobs:
           else
             printf '%s\n' "$error_line" | grep -oE "SQLSTATE\\[[^]]+\\]|Table [^[:space:]]+ doesn.t exist" || true
           fi
+          # Exception class and code locations only: messages can hold user data and this repo is public.
+          latest_log=$(ls -t storage/logs/laravel*.log 2>/dev/null | head -n 1)
+          if [ -n "$latest_log" ]; then
+            awk '/^\[[0-9-]+ [0-9:]+\] production\.ERROR:/ { entry = "" } { entry = entry $0 "\n" } END { printf "%s", entry }' "$latest_log" > /tmp/last_error_entry
+            head -n 1 /tmp/last_error_entry | grep -oE '^\[[0-9-]+ [0-9:]+\]' || true
+            grep -oE '\[object\] \([A-Za-z\\]+' /tmp/last_error_entry | head -n 1 || true
+            grep -oE ' at /[^ ]+\.php:[0-9]+' /tmp/last_error_entry | head -n 1 | sed 's#/home3/brivacok/smartfarm.briva.co.ke/##' || true
+            grep -oE '^#[0-9]+ /[^ (]+/(app|resources)/[^ (]+\([0-9]+\)' /tmp/last_error_entry | head -n 8 | sed 's#/home3/brivacok/smartfarm.briva.co.ke/##' || true
+            rm -f /tmp/last_error_entry
+          fi
           REMOTE
