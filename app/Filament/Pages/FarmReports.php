@@ -77,8 +77,8 @@ class FarmReports extends BaseDashboard
 
                     return route('pdf.farm-report', [
                         'farm_id' => $farmId,
-                        'from' => $from->toDateString(),
-                        'until' => $until->toDateString(),
+                        'from' => $from,
+                        'until' => $until,
                     ]);
                 })
                 ->openUrlInNewTab(),
