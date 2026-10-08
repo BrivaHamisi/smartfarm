@@ -34,6 +34,9 @@
                     id="password"
                     name="password"
                     type="password"
+                    autocapitalize="none"
+                    autocorrect="off"
+                    spellcheck="false"
                     class="mt-1 block w-3/4"
                     placeholder="{{ __('Password') }}"
                 />

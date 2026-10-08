@@ -87,7 +87,10 @@
                         </label>
                         <input 
                             id="password" 
-                            type="password" 
+                            type="password"
+                            autocapitalize="none"
+                            autocorrect="off"
+                            spellcheck="false"
                             name="password" 
                             required 
                             autocomplete="current-password"

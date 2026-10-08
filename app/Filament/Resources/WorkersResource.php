@@ -37,12 +37,14 @@ class WorkersResource extends Resource
                 OwnerField::make(),
                 Forms\Components\TextInput::make('name')->required()->maxLength(255),
                 Forms\Components\TextInput::make('position')->required()->maxLength(255),
-                Forms\Components\TextInput::make('email')->email()->required()->maxLength(255)->unique(table: 'workers', ignoreRecord: true),
+                Forms\Components\TextInput::make('email')->email()->autocapitalize('none')->extraInputAttributes(['autocorrect' => 'off', 'spellcheck' => 'false'])->required()->maxLength(255)->unique(table: 'workers', ignoreRecord: true),
                 Forms\Components\TextInput::make('phone')->tel()->maxLength(255),
                 Forms\Components\TextInput::make('salary')->numeric()->minValue(0)->prefix('KSh '),
                 Forms\Components\DatePicker::make('employment_date')->label('Employment date')->required(),
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->autocapitalize('none')
+                    ->extraInputAttributes(['autocorrect' => 'off', 'spellcheck' => 'false'])
                     ->revealable()
                     ->maxLength(255)
                     ->dehydrated(fn (?string $state): bool => filled($state))

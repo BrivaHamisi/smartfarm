@@ -113,7 +113,10 @@
                         </label>
                         <input 
                             id="email" 
-                            type="email" 
+                            type="email"
+                            autocapitalize="none"
+                            autocorrect="off"
+                            spellcheck="false"
                             name="email" 
                             value="{{ old('email') }}" 
                             required 
@@ -137,7 +140,10 @@
                         <div class="relative">
                             <input 
                                 id="password" 
-                                type="password" 
+                                type="password"
+                                autocapitalize="none"
+                                autocorrect="off"
+                                spellcheck="false"
                                 name="password" 
                                 required 
                                 autocomplete="new-password"
@@ -172,7 +178,10 @@
                         <div class="relative">
                             <input 
                                 id="password_confirmation" 
-                                type="password" 
+                                type="password"
+                                autocapitalize="none"
+                                autocorrect="off"
+                                spellcheck="false"
                                 name="password_confirmation" 
                                 required 
                                 autocomplete="new-password"

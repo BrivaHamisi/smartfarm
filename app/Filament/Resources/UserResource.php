@@ -71,7 +71,7 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')->required()->maxLength(255),
-                Forms\Components\TextInput::make('email')->email()->required()->maxLength(255)->unique(table: 'users', ignoreRecord: true),
+                Forms\Components\TextInput::make('email')->email()->autocapitalize('none')->extraInputAttributes(['autocorrect' => 'off', 'spellcheck' => 'false'])->required()->maxLength(255)->unique(table: 'users', ignoreRecord: true),
                 Forms\Components\Select::make('role')
                     ->options([
                         User::ROLE_OWNER => 'Farm owner',
@@ -95,6 +95,8 @@ class UserResource extends Resource
                     ->visible(fn (): bool => $isAdmin),
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->autocapitalize('none')
+                    ->extraInputAttributes(['autocorrect' => 'off', 'spellcheck' => 'false'])
                     ->revealable()
                     ->maxLength(255)
                     ->dehydrated(fn (?string $state): bool => filled($state))

@@ -93,7 +93,10 @@
                     <div class="space-y-2">
                         <x-input-label for="email" :value="__('Email')" />
                         <x-text-input id="email" 
-                            type="email" 
+                            type="email"
+                            autocapitalize="none"
+                            autocorrect="off"
+                            spellcheck="false"
                             name="email" 
                             :value="old('email')" 
                             required 
